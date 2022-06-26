@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState, MutableRefObject } from "react";
-import { Button } from "react-bootstrap";
-import styles from "./styles/videorecorder.module.css";
+import styles from "./videorecorder.module.css";
 
 const dataURLtoBlob = (dataURL: string) => fetch(dataURL).then((res) => res.blob());
 
@@ -186,12 +185,12 @@ export default function Thumbnail({
         <div className={styles.imagesContainer} ref={imagesContainerRef} />
       </div>
       <div className={styles.thumbnailPreviewContainer}>
-        <Button onClick={onCancel} variant="secondary">
+        <button onClick={onCancel}>
           Cancel
         </Button>
-        <Button onClick={getThumbnailFile} variant="primary">
+        <button onClick={getThumbnailFile} >
           Select
-        </Button>
+        </button>
       </div>
     </div>
   );
