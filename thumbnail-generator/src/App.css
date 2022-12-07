@@ -1,0 +1,13 @@
+
+
+.thumbnailContainer{
+  width: 500px;
+  height: auto;
+}
+
+.appContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 50px;
+}
+
