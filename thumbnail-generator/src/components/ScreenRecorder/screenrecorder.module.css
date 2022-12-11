@@ -1,0 +1,43 @@
+
+
+.screenRecordContainer {
+    display: none;
+}
+.title.hide {
+    display: none;
+}
+
+.title {
+    display : block;
+}
+
+
+
+.closeIcon {
+    text-align: right;
+}
+.containerFooter {
+    display: flex;
+    gap : 10px;
+}
+
+.containerBody {
+    height: 400px;
+    width: 100%;
+    padding : 0 50px;
+    border: 1px solid red;
+    margin-bottom: 20px;
+}
+
+.previewVideo {
+    display: none;
+    height: 100%;
+    width: 100%;
+}
+.previewVideo video {
+    height: 100%;
+    width: 100%;
+}
+.show {
+    display: block;
+}

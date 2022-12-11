@@ -2,6 +2,8 @@
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./thumbnail.module.css";
 import {Button} from "react-bootstrap";
+import classNames from "classnames";
+
  // this to handle the video duration bug
 
 
@@ -9,7 +11,11 @@ export  function ThumbnailGenerator({
   mediaBlobUrl,
   onSelect,
   onCancel,
+  className = "" 
 }) {
+
+
+  console.log(mediaBlobUrl);
  
 
   const [loaded, setLoaded] = useState(false);
@@ -139,8 +145,11 @@ export  function ThumbnailGenerator({
   };
 
 
+  const containerClasses = classNames(styles.mainContainer , className);
+  
+
   return (
-    <div>
+    <div className={containerClasses}>
       <img
         height={296}
         width={300}

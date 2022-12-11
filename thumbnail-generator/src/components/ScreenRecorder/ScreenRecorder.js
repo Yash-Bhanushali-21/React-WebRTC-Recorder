@@ -1,9 +1,16 @@
-import {  useRef, useState, useEffect } from "react";
+import classNames from "classnames";
+import {  useRef, useState } from "react";
 import CombinedPreview from "./CombinedPreview";
 import styles from "./screenrecorder.module.css";
 
-
-export  function ScreenRecorder() {
+const displayMediaOptions = {
+  video: {
+    width: { ideal: 1920, max: 1920 },
+    height: { ideal: 1080, max: 1080 },
+  },
+  audio: true,
+};
+export  function ScreenRecorder({show , close}) {
   const screenShareStreamRef = useRef(null);
   const webcamStreamRef = useRef(null);
   const recorderRef = useRef(null);
@@ -17,6 +24,9 @@ export  function ScreenRecorder() {
   const [webCamStream, setWebCamStream] = useState(null);
   const [screenShareStream, setScreenShareStream] = useState(null);
 
+  const [recordedVideo, setRecordedVideo] = useState("");
+
+
 
 
   
@@ -25,10 +35,7 @@ export  function ScreenRecorder() {
 
   const toggleWebcamStream = async () => {
     if (!webcamStreamRef.current) {
-      webcamStreamRef.current = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
+      webcamStreamRef.current = await navigator.mediaDevices.getUserMedia(displayMediaOptions);
       webCamTracks.current = webcamStreamRef.current.getTracks();
       setWebCamStream(webcamStreamRef.current);
     } else if (webcamStreamRef.current) {
@@ -75,10 +82,7 @@ export  function ScreenRecorder() {
   const toggleScreenShareStream = async () => {
     if (!screenShareStreamRef.current) {
       screenShareStreamRef.current =
-        await navigator.mediaDevices.getDisplayMedia({
-          video: true,
-          audio: true,
-        });
+        await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
       screenShareStreamRef.current.oninactive = onScreenShareStreamEnd;
       screenRecordTracks.current = screenShareStreamRef.current.getTracks();
       setScreenShareStream(screenShareStreamRef.current);
@@ -103,9 +107,9 @@ export  function ScreenRecorder() {
     });
     chunksRef.current = [];
     const url = URL.createObjectURL(blob);
-    finalPreview.current.src = url;
-    finalPreview.current.style.display = "block";
-    finalPreview.current.play();
+    setRecordedVideo(url);
+
+   
   };
   const startRecording = async () => {
     if (canvasRef) {
@@ -164,22 +168,36 @@ export  function ScreenRecorder() {
     }
   };
 
+  const previewVideoClasses = classNames(styles.previewVideo , {
+    [styles.show] : recordedVideo.length
+  })
+
+  const screenRecordContainerClasses= classNames(styles.screenRecordContainer , {
+    [styles.show] : show
+  })
+  
+ 
   return (
-    <div>
-      <button onClick={toggleWebcamStream}>toggle webcamstream</button>
-      <button onClick={toggleScreenShareStream}>
-        toggle ScreenShareStream
-      </button>
-      <button onClick={startRecording}>start record</button>
-      <button onClick={stopRecording}>stop record</button>
-
-      <video ref={finalPreview} style={{display: 'none'}} />
-
-      <CombinedPreview
-        webCamStream={webCamStream}
-        screenShareStream={screenShareStream}
-        getCanvasRef={getCanvasRef}
-      />
+    <div className={screenRecordContainerClasses}>
+        <div className={styles.containerBody}>
+          <div className={previewVideoClasses}>
+          <video ref={finalPreview} autoPlay src={recordedVideo} />
+          </div>
+            <CombinedPreview
+              webCamStream={webCamStream}
+              screenShareStream={screenShareStream}
+              getCanvasRef={getCanvasRef}
+            />
+        </div>
+        <div className={styles.containerFooter}>
+          <button onClick={toggleWebcamStream}>toggle webcamstream</button>
+          <button onClick={toggleScreenShareStream}>
+            toggle ScreenShareStream
+          </button>
+          <button onClick={startRecording}>start record</button>
+          <button onClick={stopRecording}>stop record</button>
+        </div>
     </div>
+
   );
 }

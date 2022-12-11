@@ -1,8 +1,55 @@
 
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+.thumbnailContainer.show, .recorderContainer.show{
+  width: 100vw;
+  height: 100vh;
+  border-radius:unset !important;
+}
+.recordingTitle {
+  display: block;
+}
+.recordingTitle.hide {
+  display: none;
+}
+.thumbnailContainer {
+  right:40px;
+}
+.thumbnailContainer.show {
+  right: 0px;
+}
+.recorderContainer {
+}
+.thumbnailContainer, .recorderContainer {
+  position: absolute;
+  width: 437px;
+  border-radius: 1rem;
+  height: 300px;
+  transition: height 1s ease ,width 1s ease;
 
-.thumbnailContainer{
+
+}
+
+.hide {
+  display: none;
+}
+
+.outerContainer {
+  height: 100vh;
+  width: 100vw;
+  padding:40px;
+  display: flex;
+  gap : 40px;
+  align-items: center;
+}
+.outerContainer.no-padding {
+  padding: unset;
+  flex-wrap: wrap;
+}
+
+.container {
   width: 500px;
-  height: auto;
 }
 
 .appContainer {
@@ -11,3 +58,36 @@
   padding: 50px;
 }
 
+body, height {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(to right, transparent calc(50% + 1px), #fff calc(50% + 1px)), linear-gradient(to right, #fff calc(50% - 1px), lightgrey calc(50% - 1px));
+}
+ 
+
+html {
+    top: 0%;
+  left: -5%;
+  -webkit-animation: slide 1s 1 ease-out
+}
+
+@-webkit-keyframes slide {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.text {
+  background: white;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  color: #333;
+  font-size: 40px;
+ 
+}
