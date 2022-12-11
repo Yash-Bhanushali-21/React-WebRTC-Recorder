@@ -13,8 +13,7 @@ body {
   
   #form-file-upload {
     height: 16rem;
-    width: 28rem;
-    max-width: 100%;
+    width: 100%;
     text-align: center;
     position: relative;
   }
@@ -28,11 +27,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-width: 2px;
+    border-width: 5px;
     border-radius: 1rem;
     border-style: dashed;
     border-color: #cbd5e1;
-    background-color: #f8fafc;
+    background-color: white;
     cursor: pointer;
   }
   

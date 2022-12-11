@@ -143,6 +143,9 @@
     height: 5px !important;
   }
   
+  .hide {
+    display: none;
+  }
   /* THUMBNAIL RELATED */
   
   .thumbnailContainer {
@@ -217,4 +220,10 @@
     width: 100%;
     margin-top: 20px;
   }
-  
+
+  .mainContainer {
+    display: none;
+  }
+  .mainContainer.show {
+    display: block;
+  }

@@ -69,8 +69,8 @@ export default function CombinedPreview({ screenShareStream, webCamStream, getCa
         screenSharePreviewRef.current &&
         webcamPreviewRef.current
       ) {
-        const WIDTH = 450;
-        const HEIGHT = 400;
+        const WIDTH = 1920;
+        const HEIGHT = 1080;
         canvasRef.current.setAttribute("width", `${WIDTH}px`);
         canvasRef.current.setAttribute("height", `${HEIGHT}px`);
         //canvasContext.
@@ -91,10 +91,10 @@ export default function CombinedPreview({ screenShareStream, webCamStream, getCa
           //Add cam video to bottom right
           canvasContextRef.current.drawImage(
             webcamPreviewRef.current,
-            WIDTH - 110,
-            HEIGHT - 110,
-            100,
-            100
+            WIDTH - 450,
+            HEIGHT - 550,
+            400,
+            500
           );
         } else if (screenShareStream && !webCamStream) {
           canvasContextRef.current.drawImage(
@@ -133,7 +133,20 @@ export default function CombinedPreview({ screenShareStream, webCamStream, getCa
       <>
         <video ref={webcamPreviewRef} autoPlay hidden playsInline muted />
         <video ref={screenSharePreviewRef} autoPlay hidden playsInline muted />
-        <canvas ref={canvasRef} />
+       <canvas ref={canvasRef} style={{ width:'100%' , height: "100%"}} />
       </>
     );
   }
+  /**
+   *  <canvas ref={canvasRef} />
+   *  position: relative;
+  background-color: #f2f4fb;
+  border-radius: 16px;
+  min-height: 296px;
+
+  style = {{
+    position : "relative",
+    borderRadius : "16px",
+    minHeight : "296px"
+  }}
+   */
