@@ -133,20 +133,8 @@ export default function CombinedPreview({ screenShareStream, webCamStream, getCa
       <>
         <video ref={webcamPreviewRef} autoPlay hidden playsInline muted />
         <video ref={screenSharePreviewRef} autoPlay hidden playsInline muted />
-       <canvas ref={canvasRef} style={{ width:'100%' , height: "100%"}} />
+       <canvas ref={canvasRef} style={{ width:'100%' , height: "100%", borderRadius : "10px"}} />
       </>
     );
   }
-  /**
-   *  <canvas ref={canvasRef} />
-   *  position: relative;
-  background-color: #f2f4fb;
-  border-radius: 16px;
-  min-height: 296px;
-
-  style = {{
-    position : "relative",
-    borderRadius : "16px",
-    minHeight : "296px"
-  }}
-   */
+  

@@ -1,7 +1,9 @@
 import classNames from "classnames";
-import {  useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import CombinedPreview from "./CombinedPreview";
 import styles from "./screenrecorder.module.css";
+import { v4 as uuidv4 } from 'uuid';
+ 
 
 const displayMediaOptions = {
   video: {
@@ -26,7 +28,25 @@ export  function ScreenRecorder({show , close}) {
 
   const [recordedVideo, setRecordedVideo] = useState("");
 
+  const keyDownEvent = (event) => {
+  
+    if(event.key === "Escape") {
+      close();
+    }
+    // Alert the key name and key code on keydown
+  }
 
+  useEffect(() => {
+
+    document.addEventListener('keydown', keyDownEvent, false);
+    //toggleWebcamStream();
+
+    return () => {
+      document.removeEventListener('keydown', keyDownEvent, false);
+
+    }
+
+  }, [])
 
 
   
@@ -168,6 +188,18 @@ export  function ScreenRecorder({show , close}) {
     }
   };
 
+  const download = () => {
+
+    const aTag= document.createElement("a");
+    aTag.href = recordedVideo;
+    document.body.appendChild(aTag);
+    aTag.download = uuidv4().toString();
+    aTag.click();
+    aTag.remove();
+
+
+  }
+
   const previewVideoClasses = classNames(styles.previewVideo , {
     [styles.show] : recordedVideo.length
   })
@@ -178,7 +210,6 @@ export  function ScreenRecorder({show , close}) {
   
  
   return (
-    <div className={screenRecordContainerClasses}>
         <div className={styles.containerBody}>
           <div className={previewVideoClasses}>
           <video ref={finalPreview} autoPlay src={recordedVideo} />
@@ -188,16 +219,24 @@ export  function ScreenRecorder({show , close}) {
               screenShareStream={screenShareStream}
               getCanvasRef={getCanvasRef}
             />
-        </div>
-        <div className={styles.containerFooter}>
+    </div>
+
+  );
+}
+
+/*
+      </div>
+       {/**
+        *  <div className={styles.containerFooter}>
           <button onClick={toggleWebcamStream}>toggle webcamstream</button>
           <button onClick={toggleScreenShareStream}>
             toggle ScreenShareStream
           </button>
           <button onClick={startRecording}>start record</button>
           <button onClick={stopRecording}>stop record</button>
-        </div>
-    </div>
+          <button onClick={download}>Download</button>
 
-  );
+        </div>
 }
+
+*/
