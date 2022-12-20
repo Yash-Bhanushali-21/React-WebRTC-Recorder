@@ -41,3 +41,15 @@
 .show {
     display: block;
 }
+.webcamIcon {
+    display: none;
+}
+.webcamIcon.show {
+    display: block;
+}
+.screenShareIcon {
+    display: none;
+}
+.screenShareIcon.show {
+    display: block;
+}

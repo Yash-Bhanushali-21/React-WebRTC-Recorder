@@ -1,7 +1,7 @@
-import { ScreenRecorder } from "./components/ScreenRecorder";
+import  ScreenRecorder  from "./components/ScreenRecorder/ScreenRecorder";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
-import { useState} from "react";
+import React ,{ useState} from "react";
 
 import {IoCloseSharp} from "react-icons/io5";
 import {FiUploadCloud} from "react-icons/fi";
@@ -41,11 +41,44 @@ function App() {
               {/**               <PickerThumbnailGenerator show={true} close = {resetState} />
  */}
             </div>
-            <RecorderModal show={selectedScreen === 0} reset={resetState} />
+            <ScreenRecorder show={selectedScreen === 0} close={resetState} />
 
    </div> )
 
 }
+
+
+/*
+
+headerConfig : {
+    custom : 
+    content : ,
+    className : ,
+}
+
+bodyConfig : {
+    content : ,
+    className,
+    icon
+}
+,
+footerConfig : {
+    custom : 
+    content : ,
+    className :
+    leftButtonIcon,
+    leftButtonLabel,
+    leftButtonOnClick,
+    rightButtonIcon,
+    rightButtonLabel,
+    rightButtonOnClick
+}
+triggerConfig : {
+    show : ,
+    onHide ,
+}
+*/
+
 
 
 const RecorderModal = ({show , reset}) => {
@@ -59,9 +92,7 @@ const RecorderModal = ({show , reset}) => {
             <div className={"modalHeader"}>
               <div className="modalHeaderContent">
                 <span>Record Video Clip</span>
-                <IoCloseSharp onClick={() => {
-                  reset(-1);
-                }} />
+                <IoCloseSharp onClick={reset} />
               </div>
             </div>
             <div className={"modalBody"}>
