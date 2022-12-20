@@ -3,7 +3,13 @@ import {  useEffect, useRef, useState } from "react";
 import CombinedPreview from "./CombinedPreview";
 import styles from "./screenrecorder.module.css";
 import { v4 as uuidv4 } from 'uuid';
- 
+ import { CustomModalWrapper } from "../Modal/Modal";
+ import {IoCloseSharp} from "react-icons/io5";
+ import {FiUploadCloud} from "react-icons/fi";
+ import {HiOutlineVideoCamera , HiOutlineVideoCameraSlash} from "react-icons/hi2";
+ import {AiOutlineAudioMuted , AiOutlineAudio , AiOutlineCloudUpload} from "react-icons/ai";
+import {TbScreenShare , TbScreenShareOff} from "react-icons/tb";
+
 
 const displayMediaOptions = {
   video: {
@@ -12,7 +18,7 @@ const displayMediaOptions = {
   },
   audio: true,
 };
-export  function ScreenRecorder({show , close}) {
+export default  function ScreenRecorder({show , close}) {
   const screenShareStreamRef = useRef(null);
   const webcamStreamRef = useRef(null);
   const recorderRef = useRef(null);
@@ -25,6 +31,7 @@ export  function ScreenRecorder({show , close}) {
   const [canvasRef, getCanvasRef] = useState(null);
   const [webCamStream, setWebCamStream] = useState(null);
   const [screenShareStream, setScreenShareStream] = useState(null);
+
 
   const [recordedVideo, setRecordedVideo] = useState("");
 
@@ -39,7 +46,6 @@ export  function ScreenRecorder({show , close}) {
   useEffect(() => {
 
     document.addEventListener('keydown', keyDownEvent, false);
-    //toggleWebcamStream();
 
     return () => {
       document.removeEventListener('keydown', keyDownEvent, false);
@@ -199,14 +205,98 @@ export  function ScreenRecorder({show , close}) {
 
 
   }
+  const toggleMediaRecording = () => {
+    if(!recorderRef.current || recorderRef.current && recorderRef.current.state === "inactive") {
+      startRecording();
+    }
+    else if(recorderRef.current && recorderRef.current.state === "recording") {
+      stopRecording();
+    }
+  }
 
   const previewVideoClasses = classNames(styles.previewVideo , {
     [styles.show] : recordedVideo.length
   })
 
-  const screenRecordContainerClasses= classNames(styles.screenRecordContainer , {
-    [styles.show] : show
+  const activeWebcamClasses = classNames(styles.webcamIcon,{
+    [styles.show] : webCamStream !== null
+  });
+  const inactiveWebcamClasses = classNames(styles.webcamIcon,{
+    [styles.show] : webCamStream === null
   })
+
+  const activeScreenShareClasses = classNames(styles.screenShareIcon , {
+    [styles.show] : screenShareStream !== null
+  })
+  
+  const inactiveScreenShareClasses = classNames(styles.screenShareIcon , {
+    [styles.show] : screenShareStream === null
+  })
+
+  return (<CustomModalWrapper
+              triggerConfig={{
+                show,
+                onHide: close
+              }}
+              modalHeaderConfig={{
+                content : null,
+                label : "Record Video Clip",
+                icon : IoCloseSharp,
+                className : ""
+              }}
+              modalBodyConfig = {{
+                custom : false,
+                className : "",
+                content : (
+                  <div className={"modalBody"}>
+                  <div className="previewContainer">
+                    <div className={styles.containerBody}>
+                      <div className={previewVideoClasses}>
+                        <video ref={finalPreview} autoPlay src={recordedVideo} />
+                      </div>
+                      <CombinedPreview
+                          webCamStream={webCamStream}
+                          screenShareStream={screenShareStream}
+                          getCanvasRef={getCanvasRef}
+                        />
+                        <div className="previewContainerFooter">
+                             <div className="rightSection">
+                              <HiOutlineVideoCamera className={activeWebcamClasses} onClick={toggleWebcamStream} />
+                              <HiOutlineVideoCameraSlash className={inactiveWebcamClasses} onClick={toggleWebcamStream} />
+                                <AiOutlineAudio />
+                            </div>
+                             <div className="leftSection">
+                               <TbScreenShareOff className={activeScreenShareClasses} onClick={toggleScreenShareStream} />
+                               <TbScreenShare  className={inactiveScreenShareClasses} onClick={toggleScreenShareStream} />
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }}
+              modalFooterConfig = {{
+                className : "",
+                content: null,
+                leftButtonConfig : {
+                  icon : FiUploadCloud,
+                  label : "Upload Video",
+                  onClick : null,
+                  disabled : false
+                },
+                rightButtonConfig : {
+                  icon : null,
+                  label : "Record",
+                  onClick : toggleMediaRecording,
+                  disabled: false
+                },
+              }}        
+          />)
+
+
+
+
+
   
  
   return (
@@ -239,4 +329,38 @@ export  function ScreenRecorder({show , close}) {
         </div>
 }
 
+*/
+
+
+/*
+
+headerConfig : {
+    label : ,
+    className : ,
+    icon : 
+}
+bodyConfig : {
+    content : ,
+    className,
+}
+footerConfig : {
+    content : ,
+    className :
+    leftButtonConfig : {{
+        icon : ,
+        label : ,
+        onClick : ,
+        disabled : 
+    }}
+    rightButtonConfig : {{
+         icon : ,
+        label : ,
+        onClick : ,
+        disabled : 
+    }}
+}
+triggerConfig : {
+    show : ,
+    onHide ,
+}
 */

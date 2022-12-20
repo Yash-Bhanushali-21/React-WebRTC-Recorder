@@ -61,14 +61,17 @@
     align-items: center;
   }
   
-  .uploadIconContainer {
+  .leftIconContainer {
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap:5px;
     color:#A0A0A2;
   }
-  .uploadIconContainer:hover{
+  .leftIconContainer:hover{
     color:black;
   }
-  .recordIconContainer {
+  .rightIconContainer {
     cursor: pointer;
     padding: 10px;
     background-color: #e8e8e8;
@@ -87,5 +90,15 @@
     height:250px;
     background-color: #f9f9f9;
     border-radius: 10px;
+  }
+  
+  
+  .previewContainerFooter svg {
+    width: 20px;
+    border-radius: 50%;
+    height: 20px;
+    color: #717274;
+    cursor: pointer;
+    background-color: transparent;
   }
   

@@ -13,6 +13,19 @@ export default function CombinedPreview({ screenShareStream, webCamStream, getCa
        createCombinedPreview();
     }
   
+    function roundedImage(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+    }
   
     const toggleWebcamAndScreenShare = () => {
       webcamPreviewRef.current.srcObject = webCamStream;
@@ -89,13 +102,20 @@ export default function CombinedPreview({ screenShareStream, webCamStream, getCa
           );
   
           //Add cam video to bottom right
+          //creating a 20px rounded canvas border.
+          roundedImage(canvasContextRef.current, WIDTH - 450,HEIGHT - 450,400,400 ,20);
+          canvasContextRef.current.strokeStyle = '#ffff'
+          canvasContextRef.current.stroke()
+          canvasContextRef.current.clip();
           canvasContextRef.current.drawImage(
             webcamPreviewRef.current,
             WIDTH - 450,
-            HEIGHT - 550,
+            HEIGHT - 450,
             400,
-            500
+            400
           );
+          canvasContextRef.current.restore();
+
         } else if (screenShareStream && !webCamStream) {
           canvasContextRef.current.drawImage(
             screenSharePreviewRef.current,
@@ -131,7 +151,7 @@ export default function CombinedPreview({ screenShareStream, webCamStream, getCa
   
     return (
       <>
-        <video ref={webcamPreviewRef} autoPlay hidden playsInline muted />
+        <video ref={webcamPreviewRef} style={{borderRadius : "10px"}} autoPlay hidden playsInline muted />
         <video ref={screenSharePreviewRef} autoPlay hidden playsInline muted />
        <canvas ref={canvasRef} style={{ width:'100%' , height: "100%", borderRadius : "10px"}} />
       </>
