@@ -2,6 +2,13 @@ import classNames from "classnames";
 import {  useEffect, useRef, useState } from "react";
 import CombinedPreview from "./CombinedPreview";
 import styles from "./screenrecorder.module.css";
+import { v4 as uuidv4 } from 'uuid';
+ import { CustomModalWrapper } from "../Modal/Modal";
+ import {IoCloseSharp} from "react-icons/io5";
+ import {FiUploadCloud} from "react-icons/fi";
+ import {HiOutlineVideoCamera , HiOutlineVideoCameraSlash} from "react-icons/hi2";
+ import {AiOutlineAudioMuted , AiOutlineAudio , AiOutlineCloudUpload} from "react-icons/ai";
+import {TbScreenShare , TbScreenShareOff} from "react-icons/tb";
 
 
 const displayMediaOptions = {
@@ -24,6 +31,28 @@ export default  function ScreenRecorder({show , close}) {
   const [canvasRef, getCanvasRef] = useState(null);
   const [webCamStream, setWebCamStream] = useState(null);
   const [screenShareStream, setScreenShareStream] = useState(null);
+
+
+  const [recordedVideo, setRecordedVideo] = useState("");
+
+  const keyDownEvent = (event) => {
+  
+    if(event.key === "Escape") {
+      close();
+    }
+    // Alert the key name and key code on keydown
+  }
+
+  useEffect(() => {
+
+    document.addEventListener('keydown', keyDownEvent, false);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownEvent, false);
+
+    }
+
+  }, [])
 
 
   
@@ -145,33 +174,131 @@ export default  function ScreenRecorder({show , close}) {
       recorderRef.current.start();
       recorderRef.current.ondataavailable = onDataAvailable;
       recorderRef.current.onstop = onStop;
-      setRecorderState("Recording");
     }
   };
-  const stopAllStreams = () => {
-    if (combinedStreamRef.current) {
+  const stopRecording = () => {
+    if (combinedStreamRef.current && recorderRef.current) {
       combinedStreamRef.current.getTracks().forEach((track) => track.stop());
       combinedStreamRef.current = null;
-    }
-    if (webcamStreamRef.current) {
+      if (webcamStreamRef.current) {
         webcamStreamRef.current.getTracks().forEach((track) => track.stop());
         webcamStreamRef.current = null;
         setWebCamStream(null);
-    }
-    if (screenShareStreamRef.current) {
+      }
+      if (screenShareStreamRef.current) {
         screenShareStreamRef.current.getTracks().forEach((track) => track.stop());
         screenShareStreamRef.current = null;
         setScreenShareStream(null);
-    }
-  }
-  const stopRecording = () => {
-    if (recorderRef.current) {
-      stopAllStreams();
+      }
       recorderRef.current.stop();
-      setRecorderState("Recorded");
     }
   };
 
+  const download = () => {
+
+    const aTag= document.createElement("a");
+    aTag.href = recordedVideo;
+    document.body.appendChild(aTag);
+    aTag.download = uuidv4().toString();
+    aTag.click();
+    aTag.remove();
+
+
+  }
+  const toggleMediaRecording = () => {
+    if(!recorderRef.current || recorderRef.current && recorderRef.current.state === "inactive") {
+      startRecording();
+    }
+    else if(recorderRef.current && recorderRef.current.state === "recording") {
+      stopRecording();
+    }
+  }
+
+  const previewVideoClasses = classNames(styles.previewVideo , {
+    [styles.show] : recordedVideo.length
+  })
+
+  const activeWebcamClasses = classNames(styles.webcamIcon,{
+    [styles.show] : webCamStream !== null
+  });
+  const inactiveWebcamClasses = classNames(styles.webcamIcon,{
+    [styles.show] : webCamStream === null
+  })
+
+  const activeScreenShareClasses = classNames(styles.screenShareIcon , {
+    [styles.show] : screenShareStream !== null
+  })
+  
+  const inactiveScreenShareClasses = classNames(styles.screenShareIcon , {
+    [styles.show] : screenShareStream === null
+  })
+
+  return (<CustomModalWrapper
+              triggerConfig={{
+                show,
+                onHide: close
+              }}
+              modalHeaderConfig={{
+                content : null,
+                label : "Record Video Clip",
+                icon : IoCloseSharp,
+                className : ""
+              }}
+              modalBodyConfig = {{
+                custom : false,
+                className : "",
+                content : (
+                  <div className={"modalBody"}>
+                  <div className="previewContainer">
+                    <div className={styles.containerBody}>
+                      <div className={previewVideoClasses}>
+                        <video ref={finalPreview} autoPlay src={recordedVideo} />
+                      </div>
+                      <CombinedPreview
+                          webCamStream={webCamStream}
+                          screenShareStream={screenShareStream}
+                          getCanvasRef={getCanvasRef}
+                        />
+                        <div className="previewContainerFooter">
+                             <div className="rightSection">
+                              <HiOutlineVideoCamera className={activeWebcamClasses} onClick={toggleWebcamStream} />
+                              <HiOutlineVideoCameraSlash className={inactiveWebcamClasses} onClick={toggleWebcamStream} />
+                                <AiOutlineAudio />
+                            </div>
+                             <div className="leftSection">
+                               <TbScreenShareOff className={activeScreenShareClasses} onClick={toggleScreenShareStream} />
+                               <TbScreenShare  className={inactiveScreenShareClasses} onClick={toggleScreenShareStream} />
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }}
+              modalFooterConfig = {{
+                className : "",
+                content: null,
+                leftButtonConfig : {
+                  icon : FiUploadCloud,
+                  label : "Upload Video",
+                  onClick : null,
+                  disabled : false
+                },
+                rightButtonConfig : {
+                  icon : null,
+                  label : "Record",
+                  onClick : toggleMediaRecording,
+                  disabled: false
+                },
+              }}        
+          />)
+
+
+
+
+
+  
+ 
   return (
         <div className={styles.containerBody}>
           <div className={previewVideoClasses}>

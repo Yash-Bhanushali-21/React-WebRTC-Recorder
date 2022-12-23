@@ -82,10 +82,6 @@ export default function CombinedPreview({ screenShareStream, webCamStream, getCa
         screenSharePreviewRef.current &&
         webcamPreviewRef.current
       ) {
-<<<<<<< Updated upstream
-        const WIDTH = 450;
-        const HEIGHT = 400;
-=======
         const WIDTH = 1920;
         const HEIGHT = 1080;
 
@@ -94,7 +90,6 @@ export default function CombinedPreview({ screenShareStream, webCamStream, getCa
 
 
 
->>>>>>> Stashed changes
         canvasRef.current.setAttribute("width", `${WIDTH}px`);
         canvasRef.current.setAttribute("height", `${HEIGHT}px`);
         //canvasContext.
@@ -113,14 +108,6 @@ export default function CombinedPreview({ screenShareStream, webCamStream, getCa
           );
   
           //Add cam video to bottom right
-<<<<<<< Updated upstream
-          canvasContextRef.current.drawImage(
-            webcamPreviewRef.current,
-            WIDTH - 110,
-            HEIGHT - 110,
-            100,
-            100
-=======
           //creating a 20px rounded canvas border.
           roundedImage(canvasContextRef.current, WIDTH - (Webcam_WIDTH + 50),HEIGHT -  (Webcam_HEIGHT + 50),Webcam_WIDTH,Webcam_HEIGHT ,20);
           canvasContextRef.current.strokeStyle = 'transparent'
@@ -132,7 +119,6 @@ export default function CombinedPreview({ screenShareStream, webCamStream, getCa
             HEIGHT - (Webcam_HEIGHT + 50),
             Webcam_WIDTH,
             Webcam_HEIGHT
->>>>>>> Stashed changes
           );
           canvasContextRef.current.restore();
 

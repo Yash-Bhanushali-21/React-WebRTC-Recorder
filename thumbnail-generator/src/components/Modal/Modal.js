@@ -1,11 +1,9 @@
 import { Modal } from "react-bootstrap"
 import "./modal.css";
 
-
-<<<<<<< Updated upstream
-export const CustomModal = ({ onHide, show , modalContent}) => {
-=======
 const renderIfComponentProvided = (Component , props = {}) => Component ? <Component {...props} /> : null;
+
+
 
 
 const CustomFooterComponent = ({footerConfig}) => {
@@ -60,8 +58,7 @@ const CustomHeaderComponent = ({headerConfig , onHide}) => {
     
 }
 
-export const CustomModalWrapper = ({triggerConfig, modalHeaderConfig, modalBodyConfig , modalFooterConfig}) => {
->>>>>>> Stashed changes
+ export const CustomModalWrapper = ({triggerConfig, modalHeaderConfig, modalBodyConfig , modalFooterConfig}) => {
 
     return (
         <Modal  show={triggerConfig.show} dialogClassName={'modal-dialog'} 
@@ -77,42 +74,3 @@ export const CustomModalWrapper = ({triggerConfig, modalHeaderConfig, modalBodyC
     )
 }
 
-
-
-/*
-
-headerConfig : {
-    label : ,
-    className : ,
-    icon : 
-}
-
-bodyConfig : {
-    content : ,
-    className,
-}
-,
-footerConfig : {
-    content : ,
-    className :
-    leftButtonConfig : {{
-        className: 
-        icon : ,
-        label : ,
-        onClick : ,
-        disabled : 
-    }}
-    rightButtonConfig : {{
-        className: 
-         icon : ,
-        label : ,
-        onClick : ,
-        disabled : 
-    }}
-    
-}
-triggerConfig : {
-    show : ,
-    onHide ,
-}
-*/
