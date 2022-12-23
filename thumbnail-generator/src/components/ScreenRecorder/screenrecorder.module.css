@@ -1,0 +1,94 @@
+<<<<<<< Updated upstream
+=======
+
+
+.screenRecordContainer {
+    display: none;
+}
+.title.hide {
+    display: none;
+}
+
+.title {
+    display : block;
+}
+
+
+
+.closeIcon {
+    text-align: right;
+}
+.containerFooter {
+    display: flex;
+    gap : 10px;
+    margin-top: 100px;
+}
+
+.containerBody {
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+
+}
+
+.previewVideo {
+    display: none;
+    height: 100%;
+    width: 100%;
+}
+.previewVideo video {
+    height: 100%;
+    width: 100%;
+}
+.show {
+    display: block;
+}
+.webcamIcon {
+    display: none;
+}
+.webcamIcon.show {
+    display: block;
+}
+.screenShareIcon {
+    display: none;
+}
+.screenShareIcon.show {
+    display: block;
+}
+
+.submitButton {
+    background-color: #D72B3F;
+    color : white;
+    cursor: pointer;
+    font-weight: 550;
+    padding: 10px;
+    border-radius: 3px;
+    transition: background-color 0.4s ease-in-out;
+  
+}
+.submitButton.disabled{
+    cursor: not-allowed;
+    background-color: #E8E8E8;
+    color : #717274;
+    transition: background-color 0.4s ease-in-out;
+}
+.submitButton.disable:hover{
+    pointer-events: not-allowed;
+
+}
+
+.uploadButton {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap:5px;
+    color:#A0A0A2;
+  }
+
+  .audioIcon {
+    display: none;
+  }
+  .audioIcon.show {
+    display: block;
+  }
+>>>>>>> Stashed changes
