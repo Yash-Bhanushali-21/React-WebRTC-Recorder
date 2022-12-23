@@ -1,13 +1,233 @@
 
+@import url('https://fonts.cdnfonts.com/css/euclid-circular-a');
 
-.thumbnailContainer{
-  width: 500px;
-  height: auto;
+
+body {
+  background-color: #F0F0F0 ;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
-
-.appContainer {
+.recorderContainer , .thumbnailContainer {
+  width: 330px;
+  height: 413.32px;
+  padding: 20px 20px 0px 20px;
+  border-radius: 26.6658px;
+  cursor: pointer;
   display: flex;
-  justify-content: space-between;
-  padding: 50px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffff;
+  flex-shrink: 0;
+  transition: transform 0.5s ease-in;
+
+}
+.recorderContainer:hover , .thumbnailContainer:hover {
+  transform: scale(1.008);
+
+}
+.recorderContainer:hover .waveContainer , .thumbnailContainer:hover .waveContainer {
+  transform: translateY(52px);
+}
+.iconContainer {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  padding: 26.67px;
+  margin-bottom: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F0F0F0 ;
 }
 
+.waveContainer {
+  margin-top: auto;
+  width: 100%;
+  height: 50px;
+  background: #f0f0f0;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  position: relative;
+  transition : transform 0.3s ease-in-out;
+}
+
+.iconContainer svg {
+  width: 100%;
+  height: 100%;
+}
+.outerContainer > * {
+  font-family: 'Euclid Circular A', sans-serif;
+
+}
+
+.outerContainer {
+  padding: 50px 100px 50px 100px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100vw;
+  height: 100vh;
+}
+
+
+
+.titleContainer {
+  margin-bottom:17px;
+font-style: normal;
+font-weight: 600;
+font-size: 25px;
+line-height: 40px;
+text-align: center;
+color: #000000;
+}
+.textContainer {
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+text-align: center;
+letter-spacing: -0.222215px;
+font-feature-settings: 'liga' off;
+color: #000000;
+
+}
+
+
+.lineSeperator {
+  width: 70%;
+  height: 1px;
+  background-color: #e8e8e8;
+  margin-bottom: 35px;
+
+}
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+
+
+
+/* modal r*/
+
+.modalHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.modalHeaderContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  height: 20px;
+  font-weight: bold;
+}
+.modalHeader::after {
+  content:"";
+  height: 1px;
+  background-color: #e8e8e8;
+  margin-top: 20px;
+}
+
+
+.modalHeader svg {
+  float: right;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.modal-dialog {
+  animation:  fadeIn 0.6s;
+}
+
+.modal-dialog .modal-content{ 
+  padding: 20px;
+  font-family: sans-serif;
+  width: 500px;
+}
+
+.modalFooter {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 500;
+}
+.modalFooter::before {
+  content:  "";
+  width: 100%;
+  height: 1px;
+  margin-bottom: 20px;
+  background-color: #e8e8e8;
+
+}
+.footerButtonContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.uploadIconContainer {
+  cursor: pointer;
+  color:#A0A0A2;
+}
+.uploadIconContainer:hover{
+  color:black;
+}
+.recordIconContainer {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #e8e8e8;
+  border-radius: 3px;
+  color:#A0A0A2;
+
+}
+
+.modalBody {
+  padding: 40px 20px;
+}
+
+.previewContainer {
+  position: relative;
+  width: 100%;
+  height:250px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.previewContainerFooter {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top:0;
+}
+.previewContainerFooter .rightSection {
+  position: absolute;
+  right:0;
+  bottom: 0;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap:20px;
+
+}
+.previewContainerFooter .leftSection {
+  position: absolute;
+  left:0;
+  bottom: 0;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap:20px;
+
+}
+.previewContainerFooter .leftSection svg, .previewContainerFooter .rightSection svg {
+  width: 20px;
+  border-radius: 50%;
+  height: 20px;
+  color: #717274;
+  cursor: pointer;
+  background-color: transparent;
+}

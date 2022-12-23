@@ -92,3 +92,28 @@
     display: block;
   }
 >>>>>>> Stashed changes
+
+.previewVideo {
+    display: none;
+    height: 100%;
+    width: 100%;
+}
+.previewVideo video {
+    height: 100%;
+    width: 100%;
+}
+.show {
+    display: block;
+}
+.webcamIcon {
+    display: none;
+}
+.webcamIcon.show {
+    display: block;
+}
+.screenShareIcon {
+    display: none;
+}
+.screenShareIcon.show {
+    display: block;
+}

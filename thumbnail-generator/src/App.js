@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-import { ScreenRecorderButton } from "./components/ScreenRecorderButton";
-import { ThumbnailCaptureButton } from "./components/ThumbnailCaptureButton";
-=======
 
 import React ,{ useState} from "react";
 
@@ -15,21 +11,13 @@ import {HiOutlineVideoCamera } from "react-icons/hi2";
 import {  AiOutlineAudio } from "react-icons/ai";
 
 //css imports.
->>>>>>> Stashed changes
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
 
+
+
 function App() {
 
-<<<<<<< Updated upstream
-  return (
-    <div className="appContainer">
-      <ScreenRecorderButton />
-      <ThumbnailCaptureButton />
-    </div>
-  
-  );
-=======
   const [selectedScreen , setSelectedScreen] = useState(-1);
 
   const onClick = (screenIndex) => {
@@ -65,7 +53,6 @@ function App() {
 
    </div> )
 
->>>>>>> Stashed changes
 }
 
 export default App;
