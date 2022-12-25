@@ -1,33 +1,26 @@
-
-
 import {IoCloseSharp , IoReload} from "react-icons/io5";
 import styles from "./previewrecording.module.css";
 import { ProgressBar } from "react-bootstrap";
-import { useEffect, useRef  , useState} from "react";
+import {  useRef  , useState} from "react";
+import {FiPlay  , FiDownloadCloud , FiImage} from "react-icons/fi";
+import {MdReplay} from "react-icons/md";
 
-const PreviewContainer = ({recordedMedia , replay}) => {
+const PreviewContainer = ({recordedMedia , recordedVideoRef }) => {
     const [progress , setProgress] = useState(0);
-    const videoRef=  useRef(null);
 
-    useEffect(() => {
-        if(replay) {
-            videoRef.current.currentTime = 0;
-            videoRef.current.play();
-        }
-    },[replay])
 
     const onTimeUpdate = (e) => {
-        setProgress(Math.floor((videoRef.current.currentTime * 100)/videoRef.current.duration))
+        setProgress(Math.floor((recordedVideoRef.current.currentTime * 100)/recordedVideoRef.current.duration))
     }
     const onLoadedMetadataHandle = () => {
-        if (videoRef.current.duration == Infinity) {
-            videoRef.current.currentTime = 1e101;
-            videoRef.current.ontimeupdate = function () {
+        if (recordedVideoRef.current.duration == Infinity) {
+            recordedVideoRef.current.currentTime = 1e101;
+            recordedVideoRef.current.ontimeupdate = function () {
             this.ontimeupdate = () => {
               return;
             };
-            videoRef.current.currentTime = 0;
-            videoRef.current.play();
+            recordedVideoRef.current.currentTime = 0;
+            recordedVideoRef.current.play();
             return;
           };
         }
@@ -35,7 +28,7 @@ const PreviewContainer = ({recordedMedia , replay}) => {
 
     return (
         <div className={styles.previewContainer}>
-            <video ref={videoRef} onTimeUpdate={onTimeUpdate} src={recordedMedia} onLoadedMetadata={onLoadedMetadataHandle} width="100%" />
+            <video ref={recordedVideoRef} onTimeUpdate={onTimeUpdate} src={recordedMedia} onLoadedMetadata={onLoadedMetadataHandle} width="100%" />
             <ProgressBar className={styles.progressBar} now={progress} />
         </div>
     );
@@ -45,8 +38,33 @@ const PreviewContainer = ({recordedMedia , replay}) => {
 
 const PreviewRecording = ({ setView , close , recordedMedia}) => {
 
-    const [play , setPlay] = useState(1);
+    const recordedVideoRef=  useRef(null);
 
+    const onPlayClick = () => {
+        if(recordedVideoRef.current) {
+            recordedVideoRef.current.currentTime = 0;
+            recordedVideoRef.current.play();
+        }
+    }
+    const onReloadClick = () => {
+        setView("record");
+    }
+    const onNextClick = () => {
+
+    }
+    const onDownloadClick = () => {
+        const anchorTag = document.createElement('a');
+        anchorTag.href = recordedMedia;
+        anchorTag.target = '_blank';
+        anchorTag.download = 'recording.mp4';
+        document.body.appendChild(anchorTag);
+        anchorTag.click();
+        document.body.removeChild(anchorTag);
+    }
+
+    const onSelectThumbnailClick = () => {
+        setView("thumbnail");
+    }
 
     return (
         <>
@@ -57,16 +75,26 @@ const PreviewRecording = ({ setView , close , recordedMedia}) => {
         </div>
         <div className="modalBody">
             <div className={styles.modalBodyContainer}>
-                <IoReload onClick={() => setView("record")} />
-                <PreviewContainer recordedMedia={recordedMedia} replay={play} />
+                <IoReload onClick={onReloadClick} />
+                <PreviewContainer recordedMedia={recordedMedia} recordedVideoRef={recordedVideoRef}  />
             </div>
         </div>
         <div className="modalFooter">
           <div className={styles.footerContainer}>
-            <div className={styles.leftSection} onClick={() => setPlay(play++)}>
-                play
+            <div className={styles.leftSection} >
+                <MdReplay className={styles.playIcon} onClick={onPlayClick}  />
+                <div className={styles.thumbnailContainer} onClick={onSelectThumbnailClick}>
+                    <FiImage />
+                    <span>Select Thumbnail</span>
+                </div>
+                <div className={styles.downloadContainer} onClick={onDownloadClick}>
+                    <FiDownloadCloud />
+                    <span>Download</span>
+                </div>
             </div>
-            <div className={styles.rightSection}></div>
+            <div className={styles.rightSection}>
+                <button className={styles.doneButton} onClick={onNextClick}>Next</button>
+            </div>
           </div>
         </div>
         </>

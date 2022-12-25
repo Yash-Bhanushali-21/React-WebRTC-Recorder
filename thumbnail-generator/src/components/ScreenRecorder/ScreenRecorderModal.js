@@ -2,7 +2,7 @@ import { Modal } from "react-bootstrap";
 import { useState } from "react";
 import ScreenRecorder from "./ScreenRecorder";
 import PreviewRecording from "./PreviewRecording";
-
+import ThumbnailSelection from "./ThumbnailSelection";
 
 const renderCurrentScreen = ({view, setView , close, recordedMedia, setRecordedMedia}) => {
     switch(view){
@@ -12,6 +12,8 @@ const renderCurrentScreen = ({view, setView , close, recordedMedia, setRecordedM
             return <PreviewRecording close={close} recordedMedia={recordedMedia}  setView={setView} />
         case "upload" : 
             return <></> //upload component.
+        case "thumbnail":
+            return <ThumbnailSelection close={close} recordedMedia={recordedMedia} setView={setView} />
         default:
             return <div>{"Nothing to show."}</div>
     }

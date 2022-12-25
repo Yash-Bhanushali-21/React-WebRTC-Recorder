@@ -309,7 +309,15 @@ export default  function ScreenRecorder({ close , setView , setRecordedMedia}) {
   }
  
   const onUploadVideoClick = () => {
-    setView("upload");
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.accept="video/*";
+    input.onchange = _ => {
+              let files = Array.from(input.files);
+              setRecordedMedia(URL.createObjectURL(files[0]));
+              setView("preview")
+          };
+    input.click();
   }
 
   return ( <>

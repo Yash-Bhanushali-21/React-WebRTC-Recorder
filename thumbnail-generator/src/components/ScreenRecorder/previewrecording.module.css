@@ -16,8 +16,41 @@
 .footerContainer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .footerContainer .leftSection,  .footerContainer .rightSection {
     display: flex;
-    
+    gap:10px;
+    align-items: center;
+}
+
+.doneButton {
+    background-color: #29a979;
+    color: white;
+    cursor: pointer;
+    font-weight: 550;
+    padding: 10px;
+    border-color: transparent;
+    border-radius: 3px;
+    transition: background-color 0.4s ease-in-out;
+  
+}
+.thumbnailContainer , .downloadContainer {
+    display: flex;
+    cursor: pointer;
+    gap:10px;
+    align-items: center;
+    padding: 10px;
+    color : #717274;
+    border-radius: 3px;
+    background-color: transparent;
+    transition: background-color 0.4s ease-in-out;
+
+}
+.thumbnailContainer:hover , .downloadContainer:hover {
+    background-color: #e8e8e8;
+    color: #000;
+}
+.playIcon {
+    cursor: pointer;
 }
