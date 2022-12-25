@@ -145,13 +145,11 @@ const ThumbnailSelection = ({close , recordedMedia , setView}) => {
                Thumbnail <IoCloseSharp onClick={close} />
             </div>
         </div>
-            <div className={styles.thumbnailContainer}>
+        <div className={`modalBody ${styles.customBody}`}>
+        <div className={styles.thumbnailContainer}>
                 <img
-                height={296}
-                width={300}
                 ref={thumbnailImgRef}
                 className={styles.thumbnailImg}
-                style={{ width: "100%" }}
                 />
                 <canvas width="1024" height="576" hidden ref={canvasRef} />
                 <video
@@ -167,17 +165,15 @@ const ThumbnailSelection = ({close , recordedMedia , setView}) => {
                 src={recordedMedia}
                 preload="auto"
                 />
-                <div className={styles.thumbnailContainer} onClick={handleThumbnailClick} ref={thumbnailContainerRef}>
+                <div className={styles.thumbsContainer} onClick={handleThumbnailClick} ref={thumbnailContainerRef}>
                     <ul className={styles.imagesContainer} ref={imagesContainerRef} />
                 </div>
             </div>
-        <div className="modalFooter">
-          <Button variant="danger" onClick={close}>
-              Cancel
-          </Button>
-          <Button variant="primary" onClick={getThumbnailFile} >
+        </div>
+        <div className="modalFooter d-flex ">
+          <button className={styles.selectButton} onClick={getThumbnailFile} >
               Select
-          </Button>
+          </button>
         </div>
         </>
     );
