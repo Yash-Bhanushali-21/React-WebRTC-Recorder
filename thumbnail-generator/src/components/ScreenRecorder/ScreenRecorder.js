@@ -30,7 +30,7 @@ const getInvertCondition = ({recordedVideo , webCamStream , screenShareStream}) 
 
 })
 
-const ScreenSharingAndWebCam = ({screenShareStream , webCamStream , isMicMuted ,toggleAudioStream , recordedVideo , toggleScreenShareStream , toggleWebcamStream , getCanvasRef , resetStates }) => {
+const ScreenSharingAndWebCam = ({screenShareStream , webCamStream , isMicMuted ,toggleAudioStream , recordedVideo , toggleScreenShareStream , toggleWebcamStream , getCanvasRef }) => {
 
   const iconWrapperClasses = classNames("iconWrapper", {
     ["preStream"] : !webCamStream && !screenShareStream,
@@ -47,11 +47,6 @@ const ScreenSharingAndWebCam = ({screenShareStream , webCamStream , isMicMuted ,
   const leftSectionClasses = classNames("leftSection",getInvertCondition({recordedVideo, webCamStream , screenShareStream}))
   const rightSectionClasses = classNames("rightSection", getInvertCondition({recordedVideo, webCamStream, screenShareStream}))
 
-
-  const reloadIconClasses = classNames(styles.reloadIcon, {
-    [styles.hide] : recordedVideo.length  === 0
-  } )
-
   const activeAudioClasses = classNames(iconWrapperClasses,{
     [styles.show] : !isMicMuted,
   });
@@ -64,7 +59,6 @@ const ScreenSharingAndWebCam = ({screenShareStream , webCamStream , isMicMuted ,
 
   return (
     <>
-    <div className={reloadIconClasses} onClick={resetStates}><IoReload /></div>
     <div className="previewContainer">
       <div className={styles.containerBody}>
         <CombinedPreview
@@ -109,7 +103,7 @@ const ScreenSharingAndWebCamHeader = ({handleClose}) => {
 }
 
 
-const ScreenSharingAndWebCamFooter = ({webCamStream , screenShareStream , recorderState, recordedVideo , onUploadVideoClick , toggleMediaRecording, onDone}) => {
+const ScreenSharingAndWebCamFooter = ({webCamStream , screenShareStream , recorderState, recordedVideo , onUploadVideoClick , toggleMediaRecording}) => {
 
   const submitButtonClasses = classNames(styles.recordButton , {
     [styles.doneButton] : recordedVideo.length,
@@ -123,7 +117,7 @@ const ScreenSharingAndWebCamFooter = ({webCamStream , screenShareStream , record
             <FiUploadCloud />
             {"Upload Video"}
          </div>
-         <div  className={submitButtonClasses}  onClick={recordedVideo.length ? onDone : toggleMediaRecording} >
+         <div  className={submitButtonClasses}  onClick={toggleMediaRecording} >
             {recorderState==="Idle" ? "Record" : (recorderState === "Recording" ? "Stop" : "Done")}
         </div>
     </div>
@@ -227,12 +221,14 @@ export default  function ScreenRecorder({ close , setView , setRecordedMedia}) {
     }
   };
   const onStop = () => {
-    const blob = new Blob(chunksRef.current, {
+    const current_blob = new Blob(chunksRef.current, {
       type: "video/webm",
     });
     chunksRef.current = [];
-    const url = URL.createObjectURL(blob);
+    const url = URL.createObjectURL(current_blob);
     setRecordedVideo(url);
+    setRecordedMedia(url);
+
 
    
   };
@@ -308,20 +304,10 @@ export default  function ScreenRecorder({ close , setView , setRecordedMedia}) {
     }
   }
 
-  const resetStates = () => {
-    setRecordedVideo("");
-    setWebCamStream("");
-    setScreenShareStream("");
-    setIsMicMuted(false);
-    setRecorderState("Idle");
-    
-  }
+
   const toggleAudioStream = () => {
   }
-  const onDone = () => {
-    setRecordedMedia(recordedVideo);
-    setView("preview");
-  }
+ 
   const onUploadVideoClick = () => {
     setView("upload");
   }
@@ -340,7 +326,6 @@ export default  function ScreenRecorder({ close , setView , setRecordedMedia}) {
                     toggleScreenShareStream={toggleScreenShareStream}
                     toggleWebcamStream={toggleWebcamStream}
                     getCanvasRef={getCanvasRef}
-                    resetStates={resetStates}
                     toggleAudioStream={toggleAudioStream}
                     recordedVideo={recordedVideo}
                   />
@@ -353,7 +338,6 @@ export default  function ScreenRecorder({ close , setView , setRecordedMedia}) {
                     recordedVideo={recordedVideo}
                     onUploadVideoClick={onUploadVideoClick}
                     toggleMediaRecording={toggleMediaRecording}
-                    onDone={onDone}
                   />       
               </div>                  
                     

@@ -1,0 +1,23 @@
+.modalBodyContainer {
+ display: flex;
+ flex-direction: column;   
+}
+.modalBodyContainer svg {
+    margin-left: auto;
+    margin-bottom: 20px;
+    margin-top: -10px;
+    cursor: pointer;
+}
+.progressBar {
+    margin-top: 20px;
+    height: 5px !important;
+}
+
+.footerContainer {
+    display: flex;
+    justify-content: space-between;
+}
+.footerContainer .leftSection,  .footerContainer .rightSection {
+    display: flex;
+    
+}
