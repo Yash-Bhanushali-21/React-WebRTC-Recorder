@@ -231,3 +231,37 @@ color: #000000;
   cursor: pointer;
   background-color: transparent;
 }
+
+
+.previewContainer .leftSection .iconWrapper, .previewContainer .rightSection .iconWrapper {
+  display: none;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  align-items:center;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+
+.previewContainer .leftSection .iconWrapper:hover svg, .previewContainer .rightSection .iconWrapper:hover svg{
+  color : white !important;
+
+}
+
+.previewContainer .leftSection .iconWrapper.preStream:hover, .previewContainer .rightSection .iconWrapper.preStream:hover {
+  background-color: #e8ebf2;
+}
+.previewContainer .leftSection .iconWrapper.postStream:hover, .previewContainer .rightSection .iconWrapper.postStream:hover {
+  background-color: #333a41;
+}
+
+.previewContainerFooter .leftSection.invert svg ,.previewContainerFooter .rightSection.invert svg {
+  color : white !important;
+}
+.outerContainer .recorderMediaContainer {
+  width: 100vw;
+  height: 400px;
+  background-color: black;
+}

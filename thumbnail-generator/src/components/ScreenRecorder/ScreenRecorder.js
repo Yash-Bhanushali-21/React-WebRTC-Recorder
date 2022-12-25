@@ -2,12 +2,11 @@ import classNames from "classnames";
 import {  useEffect, useRef, useState } from "react";
 import CombinedPreview from "./CombinedPreview";
 import styles from "./screenrecorder.module.css";
-import { v4 as uuidv4 } from 'uuid';
  import { CustomModalWrapper } from "../Modal/Modal";
- import {IoCloseSharp} from "react-icons/io5";
+ import {IoCloseSharp , IoReload} from "react-icons/io5";
  import {FiUploadCloud} from "react-icons/fi";
  import {HiOutlineVideoCamera , HiOutlineVideoCameraSlash} from "react-icons/hi2";
- import {AiOutlineAudioMuted , AiOutlineAudio , AiOutlineCloudUpload} from "react-icons/ai";
+ import {AiOutlineAudioMuted , AiOutlineAudio} from "react-icons/ai";
 import {TbScreenShare , TbScreenShareOff} from "react-icons/tb";
 
 
@@ -18,7 +17,28 @@ const displayMediaOptions = {
   },
   audio: true,
 };
+
+const getActiveClassForStream = (stream) => ({
+  [styles.show] : stream !== null
+})
+const getInActiveClassForStream = (stream) => ({
+  [styles.show] : stream === null
+})
+
+const getInvertCondition = ({recordedVideo , webCamStream , screenShareStream}) => ({
+  [styles.hide] : recordedVideo.length !== 0,
+  ["invert"] : webCamStream || screenShareStream
+
+})
+
+
+
+
+
+
 export default  function ScreenRecorder({show , close}) {
+
+
   const screenShareStreamRef = useRef(null);
   const webcamStreamRef = useRef(null);
   const recorderRef = useRef(null);
@@ -26,36 +46,28 @@ export default  function ScreenRecorder({show , close}) {
   const webCamTracks = useRef([]);
   const screenRecordTracks = useRef([]);
   const combinedStreamRef = useRef(null);
-  const finalPreview = useRef(null);
 
   const [canvasRef, getCanvasRef] = useState(null);
   const [webCamStream, setWebCamStream] = useState(null);
   const [screenShareStream, setScreenShareStream] = useState(null);
+  const [isMicMuted , setIsMicMuted] = useState(false);
+  const [recorderState, setRecorderState] = useState("Idle");
 
 
   const [recordedVideo, setRecordedVideo] = useState("");
 
   const keyDownEvent = (event) => {
-  
     if(event.key === "Escape") {
       close();
     }
-    // Alert the key name and key code on keydown
   }
 
   useEffect(() => {
-
     document.addEventListener('keydown', keyDownEvent, false);
-
     return () => {
       document.removeEventListener('keydown', keyDownEvent, false);
-
     }
-
   }, [])
-
-
-  
 
 
 
@@ -174,6 +186,8 @@ export default  function ScreenRecorder({show , close}) {
       recorderRef.current.start();
       recorderRef.current.ondataavailable = onDataAvailable;
       recorderRef.current.onstop = onStop;
+      setRecorderState("Recording");
+
     }
   };
   const stopRecording = () => {
@@ -191,20 +205,12 @@ export default  function ScreenRecorder({show , close}) {
         setScreenShareStream(null);
       }
       recorderRef.current.stop();
+      setRecorderState("Recorded");
+
     }
   };
 
-  const download = () => {
-
-    const aTag= document.createElement("a");
-    aTag.href = recordedVideo;
-    document.body.appendChild(aTag);
-    aTag.download = uuidv4().toString();
-    aTag.click();
-    aTag.remove();
-
-
-  }
+ 
   const toggleMediaRecording = () => {
     if(!recorderRef.current || recorderRef.current && recorderRef.current.state === "inactive") {
       startRecording();
@@ -214,24 +220,52 @@ export default  function ScreenRecorder({show , close}) {
     }
   }
 
-  const previewVideoClasses = classNames(styles.previewVideo , {
-    [styles.show] : recordedVideo.length
+  const resetStates = () => {
+    setRecordedVideo("");
+    setWebCamStream("");
+    setScreenShareStream("");
+    setIsMicMuted(false);
+    setRecorderState("Idle");
+    
+  }
+  const toggleAudioStream = () => {
+
+  }
+  const onDone = () => {
+    setRecorderState("Idle");
+  }
+
+  const iconWrapperClasses = classNames("iconWrapper", {
+    ["preStream"] : !webCamStream && !screenShareStream,
+    ["postStream"] : webCamStream || screenShareStream
   })
 
-  const activeWebcamClasses = classNames(styles.webcamIcon,{
-    [styles.show] : webCamStream !== null
+  const activeWebcamClasses = classNames(iconWrapperClasses,getActiveClassForStream(webCamStream));
+  const inactiveWebcamClasses = classNames(iconWrapperClasses,getInActiveClassForStream(webCamStream));
+
+  const activeScreenShareClasses = classNames(iconWrapperClasses , getActiveClassForStream(screenShareStream));
+  const inactiveScreenShareClasses = classNames(iconWrapperClasses ,getInActiveClassForStream(screenShareStream));
+
+ 
+  const leftSectionClasses = classNames("leftSection",getInvertCondition({recordedVideo, webCamStream , screenShareStream}))
+  const rightSectionClasses = classNames("rightSection", getInvertCondition({recordedVideo, webCamStream, screenShareStream}))
+
+  const submitButtonClasses = classNames(styles.recordButton , {
+    [styles.doneButton] : recordedVideo.length,
+    [styles.disabled] : !(webCamStream || screenShareStream)
   });
-  const inactiveWebcamClasses = classNames(styles.webcamIcon,{
-    [styles.show] : webCamStream === null
+
+  const reloadIconClasses = classNames(styles.reloadIcon, {
+    [styles.hide] : recordedVideo.length  === 0
+  } )
+
+  const activeAudioClasses = classNames(iconWrapperClasses,{
+    [styles.show] : !isMicMuted,
+  });
+  const inactiveAudioClasses = classNames(iconWrapperClasses,{
+    [styles.show] : isMicMuted,   
   })
 
-  const activeScreenShareClasses = classNames(styles.screenShareIcon , {
-    [styles.show] : screenShareStream !== null
-  })
-  
-  const inactiveScreenShareClasses = classNames(styles.screenShareIcon , {
-    [styles.show] : screenShareStream === null
-  })
 
   return (<CustomModalWrapper
               triggerConfig={{
@@ -249,46 +283,53 @@ export default  function ScreenRecorder({show , close}) {
                 className : "",
                 content : (
                   <div className={"modalBody"}>
+                  <div className={reloadIconClasses} onClick={resetStates}><IoReload /></div>
                   <div className="previewContainer">
                     <div className={styles.containerBody}>
-                      <div className={previewVideoClasses}>
-                        <video ref={finalPreview} autoPlay src={recordedVideo} />
-                      </div>
                       <CombinedPreview
-                          webCamStream={webCamStream}
-                          screenShareStream={screenShareStream}
-                          getCanvasRef={getCanvasRef}
-                        />
+                      screenShareStream={screenShareStream}
+                      webCamStream={webCamStream}
+                      getCanvasRef ={getCanvasRef}
+                       />
                         <div className="previewContainerFooter">
-                             <div className="rightSection">
-                              <HiOutlineVideoCamera className={activeWebcamClasses} onClick={toggleWebcamStream} />
-                              <HiOutlineVideoCameraSlash className={inactiveWebcamClasses} onClick={toggleWebcamStream} />
-                                <AiOutlineAudio />
+                            <div className={rightSectionClasses}>
+                                <div className={activeWebcamClasses} onClick={toggleWebcamStream}>                              
+                                  <HiOutlineVideoCamera className={styles.webcamIcon} />
+                                </div>
+                                <div className={inactiveWebcamClasses} onClick={toggleWebcamStream} >
+                                  <HiOutlineVideoCameraSlash  className={styles.webcamIcon}/>
+                                </div>
+                                <div className={activeAudioClasses} onClick={toggleAudioStream}>
+                                  <AiOutlineAudio />
+                                </div>
+                                <div className={inactiveAudioClasses} onClick={toggleAudioStream}>
+                                  <AiOutlineAudioMuted />
+                                </div>
                             </div>
-                             <div className="leftSection">
-                               <TbScreenShareOff className={activeScreenShareClasses} onClick={toggleScreenShareStream} />
-                               <TbScreenShare  className={inactiveScreenShareClasses} onClick={toggleScreenShareStream} />
+                            <div className={leftSectionClasses}>
+                              <div className={activeScreenShareClasses} onClick={toggleScreenShareStream} ><TbScreenShareOff className={styles.screenShareIcon} /> </div>
+                              <div className={inactiveScreenShareClasses} onClick={toggleScreenShareStream}><TbScreenShare  className={styles.screenShareIcon}  /></div>
                             </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                )
+                </div>             
+            </div>)
               }}
               modalFooterConfig = {{
                 className : "",
                 content: null,
                 leftButtonConfig : {
+                  className:styles.uploadVideoIconContainer,
                   icon : FiUploadCloud,
                   label : "Upload Video",
                   onClick : null,
                   disabled : false
                 },
                 rightButtonConfig : {
+                  className : submitButtonClasses,
                   icon : null,
-                  label : "Record",
-                  onClick : toggleMediaRecording,
-                  disabled: false
+                  label : recorderState==="Idle" ? "Record" : (recorderState === "Recording" ? "Stop" : "Done"),
+                  onClick : recordedVideo.length ? onDone : toggleMediaRecording,
                 },
               }}        
           />)
@@ -297,70 +338,6 @@ export default  function ScreenRecorder({show , close}) {
 
 
 
-  
- 
-  return (
-        <div className={styles.containerBody}>
-          <div className={previewVideoClasses}>
-          <video ref={finalPreview} autoPlay src={recordedVideo} />
-          </div>
-            <CombinedPreview
-              webCamStream={webCamStream}
-              screenShareStream={screenShareStream}
-              getCanvasRef={getCanvasRef}
-            />
-    </div>
 
-  );
 }
 
-/*
-      </div>
-       {/**
-        *  <div className={styles.containerFooter}>
-          <button onClick={toggleWebcamStream}>toggle webcamstream</button>
-          <button onClick={toggleScreenShareStream}>
-            toggle ScreenShareStream
-          </button>
-          <button onClick={startRecording}>start record</button>
-          <button onClick={stopRecording}>stop record</button>
-          <button onClick={download}>Download</button>
-
-        </div>
-}
-
-*/
-
-
-/*
-
-headerConfig : {
-    label : ,
-    className : ,
-    icon : 
-}
-bodyConfig : {
-    content : ,
-    className,
-}
-footerConfig : {
-    content : ,
-    className :
-    leftButtonConfig : {{
-        icon : ,
-        label : ,
-        onClick : ,
-        disabled : 
-    }}
-    rightButtonConfig : {{
-         icon : ,
-        label : ,
-        onClick : ,
-        disabled : 
-    }}
-}
-triggerConfig : {
-    show : ,
-    onHide ,
-}
-*/
