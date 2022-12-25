@@ -1,7 +1,6 @@
-const PreviewRecording = ({show , view, setView , close}) => {
+const PreviewRecording = ({ setView , close , recordedMedia}) => {
 
     return (<div>
-
         This is preview.
     </div>)
 }

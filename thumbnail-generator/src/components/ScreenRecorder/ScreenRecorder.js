@@ -132,7 +132,7 @@ const ScreenSharingAndWebCamFooter = ({webCamStream , screenShareStream , record
 
 
 
-export default  function ScreenRecorder({ close , setView}) {
+export default  function ScreenRecorder({ close , setView , setRecordedMedia}) {
 
 
   const screenShareStreamRef = useRef(null);
@@ -319,7 +319,8 @@ export default  function ScreenRecorder({ close , setView}) {
   const toggleAudioStream = () => {
   }
   const onDone = () => {
-    setView("preview")
+    setRecordedMedia(recordedVideo);
+    setView("preview");
   }
   const onUploadVideoClick = () => {
     setView("upload");

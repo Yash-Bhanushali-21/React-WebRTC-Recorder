@@ -4,12 +4,12 @@ import ScreenRecorder from "./ScreenRecorder";
 import PreviewRecording from "./PreviewRecording";
 
 
-const renderCurrentScreen = ({view,setView , show , close}) => {
+const renderCurrentScreen = ({view, setView , close, recordedMedia, setRecordedMedia}) => {
     switch(view){
         case "recorder":
-            return <ScreenRecorder close={close} setView={setView} />
+            return <ScreenRecorder close={close} setRecordedMedia={setRecordedMedia} setView={setView} />
         case "preview":
-            return <PreviewRecording show={show} close={close} view={view} setView={setView} />
+            return <PreviewRecording close={close} recordedMedia={recordedMedia}  setView={setView} />
         case "upload" : 
             return <></> //upload component.
         default:
@@ -20,9 +20,10 @@ const renderCurrentScreen = ({view,setView , show , close}) => {
 const ScreenRecorderModal = ({show , close}) => {
 
     const [view, setView] = useState("recorder");
+    const [recordedMedia , setRecordedMedia] = useState(null);
 
     return (<Modal  show={show} dialogClassName={'modal-dialog'} animation={false} onHide={close} centered>
-               {renderCurrentScreen({view , setView , show , close})} 
+               {renderCurrentScreen({view , setView ,recordedMedia, setRecordedMedia , close})} 
           </Modal>)
 
 }
