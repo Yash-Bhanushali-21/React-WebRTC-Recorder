@@ -4,8 +4,7 @@ import React ,{ useState} from "react";
 
 //custom component import.
 import {AudioAnalyzer} from "./components/AudioAnalyzer";
-import  {ScreenRecorder}  from "./components/ScreenRecorder";
-
+import {ScreenRecorderModal} from "./components/ScreenRecorder";
 //icon imports
 import {HiOutlineVideoCamera } from "react-icons/hi2";
 import {  AiOutlineAudio } from "react-icons/ai";
@@ -48,7 +47,7 @@ function App() {
               {/**               <PickerThumbnailGenerator show={true} close = {resetState} />
  */}
             </div>
-           {selectedScreen === 0 &&  <ScreenRecorder show={selectedScreen === 0} close={resetState} />}
+           {selectedScreen === 0 &&  <ScreenRecorderModal show={selectedScreen === 0} close={resetState} />}
            {selectedScreen === 1 && <AudioAnalyzer show = {selectedScreen === 1} close={resetState} />}
 
    </div> )

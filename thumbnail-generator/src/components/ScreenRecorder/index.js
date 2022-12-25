@@ -1,3 +1,3 @@
-import ScreenRecorder from "./ScreenRecorder";
+import ScreenRecorderModal from "./ScreenRecorderModal";
 
-export {ScreenRecorder};
+export {ScreenRecorderModal};

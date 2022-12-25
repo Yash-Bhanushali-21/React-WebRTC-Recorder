@@ -198,15 +198,20 @@ color: #000000;
 .previewContainerFooter {
   position: absolute;
   width: 100%;
-  height: 100%;
-  top:0;
+  height: 40px;
+  bottom : 0;
+
+}
+.previewContainerFooter.previewContainerFooterBg {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #2e2f32 100%);
+
 }
 .previewContainerFooter .rightSection {
   position: absolute;
   right:0;
   bottom: 0;
-  margin-right: 20px;
-  margin-bottom: 20px;
+  margin-right: 10px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   gap:20px;
@@ -216,8 +221,8 @@ color: #000000;
   position: absolute;
   left:0;
   bottom: 0;
-  margin-left: 20px;
-  margin-bottom: 20px;
+  margin-left: 10px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   gap:20px;
@@ -252,9 +257,12 @@ color: #000000;
 
 .previewContainer .leftSection .iconWrapper.preStream:hover, .previewContainer .rightSection .iconWrapper.preStream:hover {
   background-color: #e8ebf2;
+  cursor: pointer;
 }
 .previewContainer .leftSection .iconWrapper.postStream:hover, .previewContainer .rightSection .iconWrapper.postStream:hover {
   background-color: #333a41;
+  cursor: pointer;
+
 }
 
 .previewContainerFooter .leftSection.invert svg ,.previewContainerFooter .rightSection.invert svg {
