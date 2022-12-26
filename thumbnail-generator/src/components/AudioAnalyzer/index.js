@@ -1,3 +1,3 @@
-import AudioAnalyzer from "./AudioAnalyzer";
+import AudioAnalyzerModal from "./AudioAnalyzerModal";
 
-export {AudioAnalyzer};
+export {AudioAnalyzerModal};

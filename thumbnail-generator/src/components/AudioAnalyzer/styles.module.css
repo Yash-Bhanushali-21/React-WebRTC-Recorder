@@ -1,0 +1,15 @@
+.footerContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+.recordButton {
+    background-color: #D72B3F;
+    color: white;
+    cursor: pointer;
+    font-weight: 550;
+    padding: 10px;
+    border-color: transparent;
+    border-radius: 3px;
+    transition: background-color 0.4s ease-in-out;
+}
+

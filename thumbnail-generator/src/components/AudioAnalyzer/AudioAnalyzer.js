@@ -1,14 +1,17 @@
-import { useEffect,useRef } from "react";
+import { useState ,useRef } from "react";
 import {IoCloseSharp} from "react-icons/io5";
 import styles from "./styles.module.css";
+import classNames from "classnames";
 
-const AudioAnalyzer = ({show , close}) => {
+
+
+const AudioAnalyzer = ({setView , setRecordedMedia, close}) => {
    
     const recorderRef = useRef(null);
     const audioStreamRef = useRef(null);
     const chunksRef = useRef([]);
 
-
+    const [recorderState, setRecorderState] = useState("Idle");
 
     //anaylizing refs.
     const analyserCanvas = useRef(null);
@@ -65,11 +68,14 @@ const AudioAnalyzer = ({show , close}) => {
     }
     const onStop = () => {
         clearCanvas();       
-        const blob = new Blob([...chunksRef.current], {
+        const blob = new Blob(chunksRef.current, {
           type: "audio/mp3",
         });
         chunksRef.current = [];
         const url = URL.createObjectURL(blob);
+        console.log(url);
+        setRecordedMedia({url});
+        setView("preview");
       };
 
     const startRecording =  () => {
@@ -78,6 +84,7 @@ const AudioAnalyzer = ({show , close}) => {
             recorderRef.current.start();
             recorderRef.current.ondataavailable = onDataAvailable;
             recorderRef.current.onstop = onStop;
+            setRecorderState("Recording");
         }
     }
     const stopRecording = () => {
@@ -95,6 +102,8 @@ const AudioAnalyzer = ({show , close}) => {
             recorderRef.current = null;
             chunksRef.current = [];
             audioStreamRef.current = null;
+            setRecorderState("Recorded");
+
         }
     }
 
@@ -136,7 +145,32 @@ const AudioAnalyzer = ({show , close}) => {
         }
       }
 
-      return <span>Turn this to a modal.</span>
+      const recordButtonClasses = classNames(styles.recordButton, {
+      })
+
+
+
+      return (
+        <>
+        <div className="modalHeader">
+          <div className="modalHeaderContent">
+            Record Audio <IoCloseSharp onClick={close} />
+          </div>
+        </div>
+        <div className="modalBody">
+            <div className="previewContainer">
+                  <canvas ref={analyserCanvas}  />
+            </div>
+        </div>
+        <div className="modalFooter">
+          <div className={styles.footerContainer}>
+            <div className={recordButtonClasses} onClick={toggleRecording}>
+              {recorderState === "Idle" ? "Record" : "Recording"}
+            </div>
+          </div>
+        </div>
+        </>
+      )
 
       
 
@@ -149,45 +183,3 @@ const AudioAnalyzer = ({show , close}) => {
 
 export default AudioAnalyzer;
 
-
-/**
- * return (<CustomModalWrapper
-        triggerConfig={{
-          show,
-          onHide : close
-        }}
-        modalHeaderConfig={{
-          content : null,
-          label : "Record Audio Clip",
-          icon : IoCloseSharp,
-          className : ""
-        }}
-        modalBodyConfig = {{
-          custom : false,
-          className : "",
-          content : (
-            <div className={"modalBody"}>
-            <div className="previewContainer">
-                  <canvas ref={analyserCanvas}  />
-              </div>
-            </div>
-          )
-        }}
-        modalFooterConfig = {{
-          className : "",
-          leftButtonConfig : {
-            icon : null,
-            className :null,
-            label : null,
-            onClick : null,
-          },
-          rightButtonConfig : {
-            className : "",
-            icon : null,
-            label : "Record",
-            onClick :  toggleRecording,
-          },
-        }}        
-    />)
-
- */

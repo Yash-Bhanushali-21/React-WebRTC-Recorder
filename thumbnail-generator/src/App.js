@@ -3,7 +3,7 @@ import React ,{ useState} from "react";
 
 
 //custom component import.
-import {AudioAnalyzer} from "./components/AudioAnalyzer";
+import {AudioAnalyzerModal} from "./components/AudioAnalyzer";
 import {ScreenRecorderModal} from "./components/ScreenRecorder";
 //icon imports
 import {HiOutlineVideoCamera } from "react-icons/hi2";
@@ -48,7 +48,7 @@ function App() {
  */}
             </div>
            {selectedScreen === 0 &&  <ScreenRecorderModal show={selectedScreen === 0} close={resetState} />}
-           {selectedScreen === 1 && <AudioAnalyzer show = {selectedScreen === 1} close={resetState} />}
+           {selectedScreen === 1 &&  <AudioAnalyzerModal show = {selectedScreen === 1} close={resetState} />}
 
    </div> )
 
