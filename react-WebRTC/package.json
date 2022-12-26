@@ -1,5 +1,6 @@
 {
-  "name": "thumbnail-generator",
+  "name": "react-webrtc",
+  "homepage" : "https://yash-bhanushali-21.github.io/React-WebRTC-Recorder",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3000/",
@@ -19,6 +20,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
