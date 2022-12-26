@@ -1,5 +1,4 @@
 import { useEffect,useRef } from "react";
-import { CustomModalWrapper } from "../Modal/Modal";
 import {IoCloseSharp} from "react-icons/io5";
 import styles from "./styles.module.css";
 
@@ -137,7 +136,22 @@ const AudioAnalyzer = ({show , close}) => {
         }
       }
 
-      return (<CustomModalWrapper
+      return <span>Turn this to a modal.</span>
+
+      
+
+
+   
+
+
+
+}
+
+export default AudioAnalyzer;
+
+
+/**
+ * return (<CustomModalWrapper
         triggerConfig={{
           show,
           onHide : close
@@ -176,12 +190,4 @@ const AudioAnalyzer = ({show , close}) => {
         }}        
     />)
 
-
-
-   
-
-
-
-}
-
-export default AudioAnalyzer;
+ */
