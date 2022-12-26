@@ -28,7 +28,7 @@ const PreviewContainer = ({recordedMedia , recordedVideoRef }) => {
 
     return (
         <div className={styles.previewContainer}>
-            <video ref={recordedVideoRef} onTimeUpdate={onTimeUpdate} src={recordedMedia} onLoadedMetadata={onLoadedMetadataHandle} width="100%" />
+            <video ref={recordedVideoRef} onTimeUpdate={onTimeUpdate} src={recordedMedia.url} onLoadedMetadata={onLoadedMetadataHandle} width="100%" />
             <ProgressBar className={styles.progressBar} now={progress} />
         </div>
     );
@@ -49,12 +49,12 @@ const PreviewRecording = ({ setView , close , recordedMedia}) => {
     const onReloadClick = () => {
         setView("record");
     }
-    const onNextClick = () => {
-
+    const onDoneClick = () => {
+        close();
     }
     const onDownloadClick = () => {
         const anchorTag = document.createElement('a');
-        anchorTag.href = recordedMedia;
+        anchorTag.href = recordedMedia.url;
         anchorTag.target = '_blank';
         anchorTag.download = 'recording.mp4';
         document.body.appendChild(anchorTag);
@@ -93,7 +93,7 @@ const PreviewRecording = ({ setView , close , recordedMedia}) => {
                 </div>
             </div>
             <div className={styles.rightSection}>
-                <button className={styles.doneButton} onClick={onNextClick}>Next</button>
+                <button className={styles.doneButton} onClick={onDoneClick}>Done</button>
             </div>
           </div>
         </div>

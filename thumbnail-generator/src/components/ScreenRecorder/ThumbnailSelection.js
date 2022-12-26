@@ -1,12 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./thumbnailselection.module.css";
-import {Button} from "react-bootstrap";
 import classNames from "classnames";
 import {IoCloseSharp } from "react-icons/io5";
+import {AiFillLeftCircle , AiFillRightCircle} from "react-icons/ai";
 
 
-
-const ThumbnailSelection = ({close , recordedMedia , setView}) => {
+const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}) => {
 
     const [loaded, setLoaded] = useState(false);
   
@@ -127,15 +126,44 @@ const ThumbnailSelection = ({close , recordedMedia , setView}) => {
       const getThumbnailFile = async () => {
         if (thumbnailImgRef?.current) {
           const dataURL = thumbnailImgRef.current.src;
-        //  onSelect(dataURL);
+          setRecordedMedia(prevState => ({
+            ...prevState,
+            thumbnail : dataURL
+          }))
+          setView("preview")
+
         }
       };
-    
-    
-      const containerClasses = classNames(styles.mainContainer);
-      
-    
 
+      const chevronClick = (direction) => {
+        if(direction === "left") {
+          //scroll by factor of 10.
+          imagesContainerRef.current.scrollTo({
+            top:0,
+            left: -30,
+            behavior: 'smooth'
+          })
+        }
+        else {
+          imagesContainerRef.current.scrollTo({
+            left: 30,
+            top:0,
+            behavior: 'smooth'
+          })
+        }
+      }
+    
+    
+    const leftChevronClasses = classNames(styles.leftChevron , {
+      [styles.show] : true
+      
+    })
+    
+    const rightChevronClasses = classNames(styles.rightChevron , {
+      [styles.show] : true
+      
+    })
+    
 
 
     return (
@@ -162,15 +190,19 @@ const ThumbnailSelection = ({close , recordedMedia , setView}) => {
                 crossOrigin="anonymous"
                 muted
                 hidden
-                src={recordedMedia}
+                src={recordedMedia.url}
                 preload="auto"
                 />
                 <div className={styles.thumbsContainer} onClick={handleThumbnailClick} ref={thumbnailContainerRef}>
-                    <ul className={styles.imagesContainer} ref={imagesContainerRef} />
+                    <ul className={styles.imagesContainer} ref={imagesContainerRef}>
+                    </ul>
+                    <AiFillLeftCircle className={leftChevronClasses} onClick={() => chevronClick("left")} />
+                    <AiFillRightCircle className={rightChevronClasses} onClick={() => chevronClick("right")} />
+                   
                 </div>
             </div>
         </div>
-        <div className="modalFooter d-flex ">
+        <div className="modalFooter">
           <button className={styles.selectButton} onClick={getThumbnailFile} >
               Select
           </button>

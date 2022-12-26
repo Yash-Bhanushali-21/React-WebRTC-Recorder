@@ -10,10 +10,8 @@ const renderCurrentScreen = ({view, setView , close, recordedMedia, setRecordedM
             return <ScreenRecorder close={close} setRecordedMedia={setRecordedMedia} setView={setView} />
         case "preview":
             return <PreviewRecording close={close} recordedMedia={recordedMedia}  setView={setView} />
-        case "upload" : 
-            return <></> //upload component.
         case "thumbnail":
-            return <ThumbnailSelection close={close} recordedMedia={recordedMedia} setView={setView} />
+            return <ThumbnailSelection close={close} setRecordedMedia={setRecordedMedia} recordedMedia={recordedMedia} setView={setView} />
         default:
             return <div>{"Nothing to show."}</div>
     }
@@ -22,7 +20,10 @@ const renderCurrentScreen = ({view, setView , close, recordedMedia, setRecordedM
 const ScreenRecorderModal = ({show , close}) => {
 
     const [view, setView] = useState("record");
-    const [recordedMedia , setRecordedMedia] = useState(null);
+    const [recordedMedia , setRecordedMedia] = useState({
+        url : null,
+        thumbnail : null
+    });
 
     return (<Modal  show={show} dialogClassName={'modal-dialog'} animation={false} onHide={close} centered>
                {renderCurrentScreen({view , setView ,recordedMedia, setRecordedMedia , close})} 

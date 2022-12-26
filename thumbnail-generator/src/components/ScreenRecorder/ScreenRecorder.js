@@ -227,7 +227,10 @@ export default  function ScreenRecorder({ close , setView , setRecordedMedia}) {
     chunksRef.current = [];
     const url = URL.createObjectURL(current_blob);
     setRecordedVideo(url);
-    setRecordedMedia(url);
+    setRecordedMedia(prevState => ({
+      ...prevState , 
+      url
+    }));
 
 
    
@@ -314,7 +317,10 @@ export default  function ScreenRecorder({ close , setView , setRecordedMedia}) {
     input.accept="video/*";
     input.onchange = _ => {
               let files = Array.from(input.files);
-              setRecordedMedia(URL.createObjectURL(files[0]));
+              setRecordedMedia(prevState => ({
+                ...prevState , 
+                url : URL.createObjectURL(files[0])
+              }));
               setView("preview")
           };
     input.click();

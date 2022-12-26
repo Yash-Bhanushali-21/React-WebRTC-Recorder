@@ -4,7 +4,7 @@
     gap: 20px;
 }
 .customBody {
-    margin-bottom: -20px !important;
+    margin-bottom: -30px !important;
 }
 .thumbnailImg {
     min-width: 418px;
@@ -12,6 +12,7 @@
     border-radius: 10px;
 }
 .thumbsContainer {
+    position: relative;
 
 }
 .imagesContainer {
@@ -19,6 +20,24 @@
     display: flex;
     gap:10px;
     overflow-x: auto;
+}
+.leftChevron , .rightChevron{
+    display: none;
+    position: absolute;
+    top:0;
+    margin-top: 25px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.leftChevron.show {
+    display: block;
+    left:0;
+
+}
+.rightChevron.show {
+    display: block;
+    right: 0;
 }
 .imagesContainer::-webkit-scrollbar {
     background-color: transparent;
