@@ -35,7 +35,6 @@ function App() {
               <div className="lineSeperator"></div>
               <div className={"titleContainer"}>Record</div>
               <div className={"textContainer"}>let's you record a video for generating thumbnails </div>
-              <div className="waveContainer"></div>
             </div>
             
             <div className={"thumbnailContainer"} onClick={() => onClick(1)}>
@@ -43,7 +42,6 @@ function App() {
               <div className="lineSeperator"></div>
               <div className={"titleContainer"}>Audio</div>
               <div className={"textContainer"}>let's you record an audio with visualizations</div>
-              <div className="waveContainer"></div>
               {/**               <PickerThumbnailGenerator show={true} close = {resetState} />
  */}
             </div>
