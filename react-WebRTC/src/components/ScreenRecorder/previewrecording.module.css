@@ -54,3 +54,7 @@
 .playIcon {
     cursor: pointer;
 }
+
+.previewContainer video {
+    border-radius: 10px;
+}

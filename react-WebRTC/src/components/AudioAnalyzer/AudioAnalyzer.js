@@ -44,7 +44,7 @@ const AudioAnalyzer = ({setView , setRecordedMedia, close}) => {
     };
 
     const clearCanvas = () => {
-        const ctx = analyserCanvas.current.getContext("2d");
+        const ctx = analyserCanvas.current.getContext("2d" ,  { willReadFrequently: true });
         ctx.clearRect(
             0,
             0,

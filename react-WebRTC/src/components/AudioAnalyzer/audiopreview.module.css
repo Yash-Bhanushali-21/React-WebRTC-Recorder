@@ -3,6 +3,10 @@
     display: flex;
     flex-direction: column;   
    }
+   .previewContainer {
+    width: 100%;
+    
+   }
   
    .modalBodyContainer svg {
        margin-left: auto;

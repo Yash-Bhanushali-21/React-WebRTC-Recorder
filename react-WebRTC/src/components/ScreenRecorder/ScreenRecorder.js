@@ -309,6 +309,24 @@ export default  function ScreenRecorder({ close , setView , setRecordedMedia}) {
 
 
   const toggleAudioStream = () => {
+    const webCamAudioTracks = webCamStream ? webCamStream.getAudioTracks() : null;
+    const screenShareAudioTracks = screenShareStream ? screenShareStream.getAudioTracks() : null;
+
+    if(screenShareAudioTracks || webCamAudioTracks) {
+      //do the toggle only if streams exists.
+      if(isMicMuted) {
+        //do something.
+        if(webCamAudioTracks) webCamAudioTracks.at(0).enabled = false;
+        if(screenShareAudioTracks) screenShareAudioTracks.at(0).enabled = false;
+        setIsMicMuted(false);
+      }
+      else {
+        if(webCamAudioTracks) webCamAudioTracks.at(0).enabled = true;
+        if(screenShareAudioTracks) screenShareAudioTracks.at(0).enabled = true;
+        setIsMicMuted(true);
+      }
+    }
+ 
   }
  
   const onUploadVideoClick = () => {

@@ -93,7 +93,7 @@ export default function CombinedPreview({ screenShareStream, webCamStream, getCa
         canvasRef.current.setAttribute("width", `${WIDTH}px`);
         canvasRef.current.setAttribute("height", `${HEIGHT}px`);
         //canvasContext.
-        canvasContextRef.current = canvasRef.current.getContext("2d");
+        canvasContextRef.current = canvasRef.current.getContext("2d",  { willReadFrequently: true });
         canvasContextRef.current.clearRect(0, 0, WIDTH, HEIGHT);
         canvasContextRef.current.save();
         // Drawing screen recording on canvas

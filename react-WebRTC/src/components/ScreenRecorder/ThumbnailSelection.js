@@ -8,7 +8,11 @@ import {AiFillLeftCircle , AiFillRightCircle} from "react-icons/ai";
 const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}) => {
 
     const [loaded, setLoaded] = useState(false);
-  
+    const [showChevrons, setShowChevrons] = useState(false);
+
+    const thumbnailImagesRef = useRef([]);
+    
+
     const imagesContainerRef = useRef(null);
     const thumbnailImgRef = useRef(null);
     const videoRef = useRef(null);
@@ -30,6 +34,8 @@ const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}
           }
         };
       }, [loaded]);
+
+    
     
     
     
@@ -38,6 +44,9 @@ const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}
           videoRef.current.currentTime = 0;
           videoRef.current.removeEventListener("timeupdate", getVideoSnapShot);
           videoRef.current.addEventListener("timeupdate", drawThumbnailPreview);
+
+          //trigger a state update for canvas images render.
+          setShowChevrons(true);
         }
       };
     
@@ -65,30 +74,24 @@ const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}
         if (videoRef.current) {
           let imageObject = drawImageOfVideo();
           //give the src to new Image.
-          let img = new Image();
-          img.setAttribute("src" , imageObject.url);
-          img.setAttribute("crossorigin" , "anonymous");
-          img.setAttribute("height" , "64");
-          img.setAttribute("width" , "125");
-          img.setAttribute("data-timestamp" ,imageObject.currentTime )
     
           if (
             videoRef.current.currentTime + videoRef.current.duration / 5 <
             videoRef.current.duration
           ) {
-            if (imagesContainerRef.current) {
                 ///images are appended here.
-                imagesContainerRef.current.appendChild(img);
-            }
+                if(thumbnailImagesRef.current) {
+                  thumbnailImagesRef.current = [...thumbnailImagesRef.current , imageObject];
+                }
+            
             videoRef.current.currentTime += videoRef.current.duration / 5;
           } else {
             //last frame of the video
-            if (imagesContainerRef.current) {
                     ///images are appended here.
-                imagesContainerRef.current.appendChild(img)
-            }
-    
-            //remove "getVideoSnapShot" after all thumbnails at different time generated
+                    if(thumbnailImagesRef.current) {
+                      thumbnailImagesRef.current = [...thumbnailImagesRef.current , imageObject];
+                    }
+
             onThumbnailsGenerated();
           }
         }
@@ -139,15 +142,13 @@ const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}
         if(direction === "left") {
           //scroll by factor of 10.
           imagesContainerRef.current.scrollTo({
-            top:0,
-            left: -30,
+            left: -46,
             behavior: 'smooth'
           })
         }
         else {
           imagesContainerRef.current.scrollTo({
-            left: 30,
-            top:0,
+            left: 46,
             behavior: 'smooth'
           })
         }
@@ -155,12 +156,12 @@ const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}
     
     
     const leftChevronClasses = classNames(styles.leftChevron , {
-      [styles.show] : true
+      [styles.show] : showChevrons
       
     })
     
     const rightChevronClasses = classNames(styles.rightChevron , {
-      [styles.show] : true
+      [styles.show] : showChevrons
       
     })
     
@@ -193,8 +194,20 @@ const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}
                 src={recordedMedia.url}
                 preload="auto"
                 />
-                <div className={styles.thumbsContainer} onClick={handleThumbnailClick} ref={thumbnailContainerRef}>
+                <div className={styles.thumbsContainer} ref={thumbnailContainerRef}>
                     <ul className={styles.imagesContainer} ref={imagesContainerRef}>
+                      {thumbnailImagesRef.current.length > 0 ? 
+                      thumbnailImagesRef.current.map(({url , currentTime}  , index) => 
+                        (<img 
+                          key={index.toString().concat(currentTime)} 
+                          src={url} 
+                          width={125} 
+                          height={64}
+                          onClick={handleThumbnailClick} 
+                          //custom attribute.
+                          data-timestamp={currentTime} 
+                        />
+                        )) : <></>}
                     </ul>
                     <AiFillLeftCircle className={leftChevronClasses} onClick={() => chevronClick("left")} />
                     <AiFillRightCircle className={rightChevronClasses} onClick={() => chevronClick("right")} />

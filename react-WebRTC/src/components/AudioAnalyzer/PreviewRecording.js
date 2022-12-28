@@ -2,7 +2,7 @@ import {IoCloseSharp , IoReload} from "react-icons/io5";
 import styles from "./audiopreview.module.css";
 import { ProgressBar } from "react-bootstrap";
 import {  useRef  , useState , useImperativeHandle} from "react";
-import {   FiDownloadCloud , FiImage} from "react-icons/fi";
+import {   FiDownloadCloud } from "react-icons/fi";
 import {MdReplay} from "react-icons/md";
 
 const PreviewContainer = ({recordedMedia , recordedAudioRef, canvasLoopingFnRef }) => {
@@ -42,7 +42,7 @@ const PreviewContainer = ({recordedMedia , recordedAudioRef, canvasLoopingFnRef 
     }
 
     const clearCanvas = () => {
-        const ctx = analyserCanvas.current.getContext("2d");
+        const ctx = analyserCanvas.current.getContext("2d",  { willReadFrequently: true });
         ctx.clearRect(
             0,
             0,
@@ -53,12 +53,14 @@ const PreviewContainer = ({recordedMedia , recordedAudioRef, canvasLoopingFnRef 
 
     
     function fitCanvasToContainer(){
-        // Make it visually fill the positioned parent
-        analyserCanvas.current.style.width ='100%';
-        analyserCanvas.current.style.height='100%';
-        // ...then set the internal size to match
-        analyserCanvas.current.width  =  analyserCanvas.current.offsetWidth;
-        analyserCanvas.current.height =  analyserCanvas.current.offsetHeight;
+     if(analyserCanvas.current) {
+           // Make it visually fill the positioned parent
+           analyserCanvas.current.style.width =analyserCanvas.current.offsetWidth;
+           analyserCanvas.current.style.height=analyserCanvas.current.offsetHeight;
+           // ...then set the internal size to match
+           analyserCanvas.current.width  =  analyserCanvas.current.offsetWidth;
+           analyserCanvas.current.height =  analyserCanvas.current.offsetHeight;
+     }
   }
 
     const draw = (dataParm, ctx) => {
@@ -94,7 +96,7 @@ const PreviewContainer = ({recordedMedia , recordedAudioRef, canvasLoopingFnRef 
     return (
         <div className={styles.previewContainer}>
             <canvas ref={analyserCanvas} />
-            <audio ref={recordedAudioRef} src={recordedMedia.url} onTimeUpdate={onTimeUpdate} onLoadedMetadata={onLoadedData} onEnded={onPlayBackEnd} />
+            <audio ref={recordedAudioRef} src={recordedMedia.url} onTimeUpdate={onTimeUpdate} onLoadedMetadata={onLoadedData}  onEnded={onPlayBackEnd} />
             <ProgressBar className={styles.progressBar} now={progress} />
         </div>
     );
