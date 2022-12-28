@@ -204,7 +204,7 @@ export default  function ScreenRecorder({ close , setView , setRecordedMedia}) {
 
   const closeScreenShareStream = () => {
     setScreenShareStream(null);
-    screenShareStreamRef.current.getTracks().forEach((track) => track.stop());
+    screenShareStreamRef.current?.getTracks()?.forEach((track) => track.stop());
     screenShareStreamRef.current = null;  
     
   }
@@ -323,13 +323,13 @@ export default  function ScreenRecorder({ close , setView , setRecordedMedia}) {
       //do the toggle only if streams exists.
       if(isMicMuted) {
         //do something.
-        if(webCamAudioTracks) webCamAudioTracks.at(0).enabled = false;
-        if(screenShareAudioTracks) screenShareAudioTracks.at(0).enabled = false;
+        if(webCamAudioTracks && webCamAudioTracks.length) webCamAudioTracks.at(0).enabled = true;
+        if(screenShareAudioTracks && screenShareAudioTracks.length) screenShareAudioTracks.at(0).enabled = true;
         setIsMicMuted(false);
       }
       else {
-        if(webCamAudioTracks) webCamAudioTracks.at(0).enabled = true;
-        if(screenShareAudioTracks) screenShareAudioTracks.at(0).enabled = true;
+        if(webCamAudioTracks && webCamAudioTracks.length) webCamAudioTracks.at(0).enabled = false;
+        if(screenShareAudioTracks && screenShareAudioTracks.length) screenShareAudioTracks.at(0).enabled = false;
         setIsMicMuted(true);
       }
     }
