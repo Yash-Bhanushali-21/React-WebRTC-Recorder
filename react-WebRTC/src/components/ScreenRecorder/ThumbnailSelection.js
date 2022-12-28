@@ -3,7 +3,7 @@ import styles from "./thumbnailselection.module.css";
 import classNames from "classnames";
 import {IoCloseSharp } from "react-icons/io5";
 import {AiFillLeftCircle , AiFillRightCircle} from "react-icons/ai";
-
+import { useNavigationScroll } from "../../utils/hooks/useNavigationScroll";
 
 const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}) => {
 
@@ -13,11 +13,15 @@ const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}
     const thumbnailImagesRef = useRef([]);
     
 
-    const imagesContainerRef = useRef(null);
     const thumbnailImgRef = useRef(null);
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
     const thumbnailContainerRef = useRef(null);
+
+
+    const { scrollLeft, scrollRight, elementRef, navigationVisibility } = useNavigationScroll({
+      show: showChevrons
+    });
 
 
     useEffect(() => {
@@ -138,30 +142,16 @@ const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}
         }
       };
 
-      const chevronClick = (direction) => {
-        if(direction === "left") {
-          //scroll by factor of 10.
-          imagesContainerRef.current.scrollTo({
-            left: -46,
-            behavior: 'smooth'
-          })
-        }
-        else {
-          imagesContainerRef.current.scrollTo({
-            left: 46,
-            behavior: 'smooth'
-          })
-        }
-      }
+      
     
     
     const leftChevronClasses = classNames(styles.leftChevron , {
-      [styles.show] : showChevrons
+      [styles.show] : navigationVisibility.left
       
     })
     
     const rightChevronClasses = classNames(styles.rightChevron , {
-      [styles.show] : showChevrons
+      [styles.show] : navigationVisibility.right
       
     })
     
@@ -195,7 +185,7 @@ const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}
                 preload="auto"
                 />
                 <div className={styles.thumbsContainer} ref={thumbnailContainerRef}>
-                    <ul className={styles.imagesContainer} ref={imagesContainerRef}>
+                    <ul className={styles.imagesContainer} ref={elementRef}>
                       {thumbnailImagesRef.current.length > 0 ? 
                       thumbnailImagesRef.current.map(({url , currentTime}  , index) => 
                         (<img 
@@ -209,8 +199,8 @@ const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}
                         />
                         )) : <></>}
                     </ul>
-                    <AiFillLeftCircle className={leftChevronClasses} onClick={() => chevronClick("left")} />
-                    <AiFillRightCircle className={rightChevronClasses} onClick={() => chevronClick("right")} />
+                    <AiFillLeftCircle className={leftChevronClasses} onClick={scrollLeft} />
+                    <AiFillRightCircle className={rightChevronClasses} onClick={scrollRight} />
                    
                 </div>
             </div>

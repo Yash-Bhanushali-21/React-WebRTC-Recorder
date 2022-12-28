@@ -2,7 +2,7 @@ import classNames from "classnames";
 import {  useEffect, useRef, useState } from "react";
 import CombinedPreview from "./CombinedPreview";
 import styles from "./screenrecorder.module.css";
- import {IoCloseSharp , IoReload} from "react-icons/io5";
+ import {IoCloseSharp } from "react-icons/io5";
  import {FiUploadCloud} from "react-icons/fi";
  import {HiOutlineVideoCamera , HiOutlineVideoCameraSlash} from "react-icons/hi2";
  import {AiOutlineAudioMuted , AiOutlineAudio} from "react-icons/ai";
@@ -202,16 +202,23 @@ export default  function ScreenRecorder({ close , setView , setRecordedMedia}) {
     return audioDestination;
   };
 
+  const closeScreenShareStream = () => {
+    setScreenShareStream(null);
+    screenShareStreamRef.current.getTracks().forEach((track) => track.stop());
+    screenShareStreamRef.current = null;  
+    
+  }
+
   const toggleScreenShareStream = async () => {
     if (!screenShareStreamRef.current) {
       screenShareStreamRef.current =
         await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
       screenRecordTracks.current = screenShareStreamRef.current.getTracks();
+      //oninactive to listen to stop sharing event on system tray.
+      screenShareStreamRef.current.oninactive = closeScreenShareStream;
       setScreenShareStream(screenShareStreamRef.current);
     } else if (screenShareStreamRef.current) {
-      setScreenShareStream(null);
-      screenShareStreamRef.current.getTracks().forEach((track) => track.stop());
-      screenShareStreamRef.current = null;  
+      closeScreenShareStream();
       }
     
   };

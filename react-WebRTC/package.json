@@ -1,6 +1,6 @@
 {
   "name": "react-webrtc",
-  "homepage" : "https://yash-bhanushali-21.github.io/React-WebRTC-Recorder",
+  "homepage": "https://yash-bhanushali-21.github.io/React-WebRTC-Recorder",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3000/",
@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.3",
     "classnames": "^2.3.2",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
     "react-dom": "^18.2.0",
@@ -20,8 +21,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

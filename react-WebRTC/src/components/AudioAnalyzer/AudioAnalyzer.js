@@ -73,7 +73,6 @@ const AudioAnalyzer = ({setView , setRecordedMedia, close}) => {
         });
         chunksRef.current = [];
         const url = URL.createObjectURL(blob);
-        console.log(url);
         setRecordedMedia({url});
         setView("preview");
       };
