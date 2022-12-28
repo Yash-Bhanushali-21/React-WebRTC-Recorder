@@ -3,10 +3,17 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import styles from "./tooltipoverlay.module.css";
 
 
-export const TooltipOverlay = ({children , show}) => {
+export const TooltipOverlay = ({tooltipLabel , content , show }) => {
+   if(show) {
     return(
-        <OverlayTrigger trigger={["hover","focus"]} overlay={<Tooltip show={show} >This is tooltip</Tooltip>}>
-        {children}
-    </OverlayTrigger>
-    )
+        <OverlayTrigger       
+        delay={{ show: 500, hide: 200 }}
+        offset={[0,10]}
+        rootClose
+         placement={"bottom"} trigger={["hover","focus"]} overlay={<Tooltip show={show} >{tooltipLabel}</Tooltip>}>
+          {content}
+        </OverlayTrigger>
+        )
+   }
+   return content;
 }

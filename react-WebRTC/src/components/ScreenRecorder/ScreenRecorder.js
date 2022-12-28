@@ -2,12 +2,12 @@ import classNames from "classnames";
 import {  useEffect, useRef, useState } from "react";
 import CombinedPreview from "./CombinedPreview";
 import styles from "./screenrecorder.module.css";
- import {IoCloseSharp } from "react-icons/io5";
- import {FiUploadCloud} from "react-icons/fi";
- import {HiOutlineVideoCamera , HiOutlineVideoCameraSlash} from "react-icons/hi2";
- import {AiOutlineAudioMuted , AiOutlineAudio} from "react-icons/ai";
+import {IoCloseSharp } from "react-icons/io5";
+import {FiUploadCloud} from "react-icons/fi";
+import {HiOutlineVideoCamera , HiOutlineVideoCameraSlash} from "react-icons/hi2";
+import {AiOutlineAudioMuted , AiOutlineAudio} from "react-icons/ai";
 import {TbScreenShare , TbScreenShareOff} from "react-icons/tb";
-
+import {TooltipOverlay} from "../TooltipOverlay";
 //configs and utils.
 const displayMediaOptions = {
   video: {
@@ -68,22 +68,63 @@ const ScreenSharingAndWebCam = ({screenShareStream , webCamStream , isMicMuted ,
          />
           <div className={previewContainerFooterClasses}>
               <div className={rightSectionClasses}>
-                  <div className={activeWebcamClasses} onClick={toggleWebcamStream}>                              
-                    <HiOutlineVideoCamera className={styles.webcamIcon} />
-                  </div>
-                  <div className={inactiveWebcamClasses} onClick={toggleWebcamStream} >
-                    <HiOutlineVideoCameraSlash  className={styles.webcamIcon}/>
-                  </div>
-                  <div className={activeAudioClasses} onClick={toggleAudioStream}>
-                    <AiOutlineAudio />
-                  </div>
-                  <div className={inactiveAudioClasses} onClick={toggleAudioStream}>
-                    <AiOutlineAudioMuted />
-                  </div>
+                    <TooltipOverlay
+                     show={webCamStream} 
+                     tooltipLabel={"Turn off Webcam"} 
+                     content={
+                      <div className={activeWebcamClasses} onClick={toggleWebcamStream}>                              
+                         <HiOutlineVideoCamera className={styles.webcamIcon} />
+                      </div>
+
+                     }
+                     />
+                     <TooltipOverlay 
+                      show={!webCamStream}
+                      tooltipLabel={"Turn On Webcam"} 
+                      content={
+                        <div className={inactiveWebcamClasses} onClick={toggleWebcamStream} >
+                          <HiOutlineVideoCameraSlash  className={styles.webcamIcon}/>
+                        </div>
+                      }
+                      />
+                  
+                  <TooltipOverlay 
+                      show={!isMicMuted}
+                      tooltipLabel={"Turn Off Mic"} 
+                      content={
+                        <div className={activeAudioClasses} onClick={toggleAudioStream}>
+                        <AiOutlineAudio />
+                      </div>
+                      }
+                      />
+
+                  <TooltipOverlay 
+                      show={isMicMuted}
+                      tooltipLabel={"Turn On Mic"} 
+                      content={
+                        <div className={inactiveAudioClasses} onClick={toggleAudioStream}>
+                          <AiOutlineAudioMuted />
+                        </div>
+                      }
+                      />
+                  
+                 
               </div>
               <div className={leftSectionClasses}>
-                <div className={activeScreenShareClasses} onClick={toggleScreenShareStream} ><TbScreenShareOff className={styles.screenShareIcon} /> </div>
-                <div className={inactiveScreenShareClasses} onClick={toggleScreenShareStream}><TbScreenShare  className={styles.screenShareIcon}  /></div>
+                   <TooltipOverlay 
+                      show={screenShareStream}
+                      tooltipLabel={"Turn Off Screen Sharing"} 
+                      content={
+                        <div className={activeScreenShareClasses} onClick={toggleScreenShareStream} ><TbScreenShareOff className={styles.screenShareIcon} /> </div>
+                      }
+                      />
+                    <TooltipOverlay 
+                      show={!screenShareStream}
+                      tooltipLabel={"Turn On Screen Sharing"} 
+                      content={
+                        <div className={inactiveScreenShareClasses} onClick={toggleScreenShareStream}><TbScreenShare  className={styles.screenShareIcon}  /></div>
+                      }
+                      />
               </div>
           </div>
         </div>
