@@ -4,7 +4,7 @@ import { ProgressBar } from "react-bootstrap";
 import {  useRef  , useState , useImperativeHandle} from "react";
 import {   FiDownloadCloud } from "react-icons/fi";
 import {MdReplay} from "react-icons/md";
-
+import NotchCloseIcon from "../NotchCloseIcon";
 const PreviewContainer = ({recordedMedia , recordedAudioRef, canvasLoopingFnRef }) => {
 
     const [progress , setProgress] = useState(0);
@@ -33,7 +33,7 @@ const PreviewContainer = ({recordedMedia , recordedAudioRef, canvasLoopingFnRef 
         const audioSrc = audioCtx.createMediaStreamSource(audioStream);
         audioSrc.connect(analyser);
         dataRef.current = new Uint8Array(analyser.frequencyBinCount);
-        fitCanvasToContainer();
+       // fitCanvasToContainer();
         recordedAudioRef.current.play().then(() =>  loopingFunction());
         }
         catch(e) {
@@ -94,10 +94,9 @@ const PreviewContainer = ({recordedMedia , recordedAudioRef, canvasLoopingFnRef 
    
 
     return (
-        <div className={styles.previewContainer}>
-            <canvas ref={analyserCanvas} />
+        <div className={"previewContainer"}>
+            <canvas ref={analyserCanvas} width={"430"} height={"250"}/>
             <audio ref={recordedAudioRef} src={recordedMedia.url} onTimeUpdate={onTimeUpdate} onLoadedMetadata={onLoadedData}  onEnded={onPlayBackEnd} />
-            <ProgressBar className={styles.progressBar} now={progress} />
         </div>
     );
 }
@@ -135,11 +134,7 @@ const PreviewRecording = ({ setView , close , recordedMedia}) => {
    
     return (
         <>
-        <div className="modalHeader">
-            <div className="modalHeaderContent">
-                Preview <IoCloseSharp onClick={close} />
-            </div>
-        </div>
+        <NotchCloseIcon handleClose={close}/>
         <div className="modalBody">
             <div className={styles.modalBodyContainer}>
                 <IoReload onClick={onReloadClick} />

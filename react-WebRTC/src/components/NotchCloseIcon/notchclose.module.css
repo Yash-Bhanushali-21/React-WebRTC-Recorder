@@ -1,0 +1,21 @@
+.notch {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    height: 32px;
+    width: 90px;
+    top: -29px;
+    right: 20px;
+    clip-path: path(
+      "M64.104 12.681L66.8969 18.8069C70.0053 25.6249 76.8084 30 84.3015 30L3.89853 30C11.3916 30 18.1947 25.6249 21.3031 18.8069L24.096 12.681C26.0005 8.50357 29.3082 5.12526 33.4444 3.13284C40.1779 -0.110704 48.0221 -0.110704 54.7556 3.13284C58.8918 5.12526 62.1995 8.50357 64.104 12.681Z"
+    );
+  }
+  
+  
+  
+  .crossIcon {
+    height: 15px;
+    width: 15px;
+  }

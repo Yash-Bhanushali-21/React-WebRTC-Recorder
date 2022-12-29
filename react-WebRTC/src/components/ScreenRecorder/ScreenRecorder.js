@@ -7,6 +7,8 @@ import {FiUploadCloud} from "react-icons/fi";
 import {HiOutlineVideoCamera , HiOutlineVideoCameraSlash} from "react-icons/hi2";
 import {AiOutlineAudioMuted , AiOutlineAudio} from "react-icons/ai";
 import {TbScreenShare , TbScreenShareOff} from "react-icons/tb";
+import NotchCloseIcon from "../NotchCloseIcon";
+
 import {TooltipOverlay} from "../TooltipOverlay";
 //configs and utils.
 const displayMediaOptions = {
@@ -90,7 +92,7 @@ const ScreenSharingAndWebCam = ({screenShareStream , webCamStream , isMicMuted ,
                   
                   <TooltipOverlay 
                       show={!isMicMuted}
-                      tooltipLabel={"Turn Off Mic"} 
+                      tooltipLabel={webCamStream || screenShareStream ? "Turn Off Mic" : "Open Webcam/ScreenShare to toggle mic"} 
                       content={
                         <div className={activeAudioClasses} onClick={toggleAudioStream}>
                         <AiOutlineAudio />
@@ -100,7 +102,7 @@ const ScreenSharingAndWebCam = ({screenShareStream , webCamStream , isMicMuted ,
 
                   <TooltipOverlay 
                       show={isMicMuted}
-                      tooltipLabel={"Turn On Mic"} 
+                      tooltipLabel={webCamStream || screenShareStream ? "Turn On Mic" : "Open Webcam/ScreenShare to toggle mic"} 
                       content={
                         <div className={inactiveAudioClasses} onClick={toggleAudioStream}>
                           <AiOutlineAudioMuted />
@@ -133,15 +135,7 @@ const ScreenSharingAndWebCam = ({screenShareStream , webCamStream , isMicMuted ,
   )
 }
 
-const ScreenSharingAndWebCamHeader = ({handleClose}) => {
- 
-  return (
-    <>
-        <span>Record Video Clip</span>
-        <IoCloseSharp onClick={handleClose} />
-     </>
-  )
-}
+
 
 
 const ScreenSharingAndWebCamFooter = ({webCamStream , screenShareStream , recorderState, recordedVideo , onUploadVideoClick , toggleMediaRecording}) => {
@@ -393,11 +387,7 @@ export default  function ScreenRecorder({ close , setView , setRecordedMedia}) {
   }
 
   return ( <>
-              <div className={"modalHeader"}>
-                    <div className="modalHeaderContent">
-                     <ScreenSharingAndWebCamHeader handleClose = {close} />
-                    </div>
-              </div>
+              <NotchCloseIcon handleClose = {close} />
               <div className="modalBody">
                  <ScreenSharingAndWebCam 
                     screenShareStream={screenShareStream}

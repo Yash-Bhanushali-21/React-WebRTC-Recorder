@@ -2,7 +2,7 @@ import { useState ,useRef } from "react";
 import {IoCloseSharp} from "react-icons/io5";
 import styles from "./styles.module.css";
 import classNames from "classnames";
-
+import NotchCloseIcon from "../NotchCloseIcon";
 
 
 const AudioAnalyzer = ({setView , setRecordedMedia, close}) => {
@@ -19,16 +19,6 @@ const AudioAnalyzer = ({setView , setRecordedMedia, close}) => {
     const dataRef = useRef([]);
     const rafIdRef = useRef(null);
 
-
-    
-    function fitCanvasToContainer(){
-        // Make it visually fill the positioned parent
-        analyserCanvas.current.style.width ='100%';
-        analyserCanvas.current.style.height='100%';
-        // ...then set the internal size to match
-        analyserCanvas.current.width  =  analyserCanvas.current.offsetWidth;
-        analyserCanvas.current.height =  analyserCanvas.current.offsetHeight;
-  }
 
     const draw = (dataParm, ctx) => {
         ctx.fillStyle = "white"; //white bg
@@ -125,7 +115,7 @@ const AudioAnalyzer = ({setView , setRecordedMedia, close}) => {
             const audioSrc = audioCtx.createMediaStreamSource(audioStream);
             audioSrc.connect(analyser);
             dataRef.current = new Uint8Array(analyser.frequencyBinCount);
-            fitCanvasToContainer();
+         //   fitCanvasToContainer();
             loopingFunction();
           } catch (err) {
             // error handling
@@ -151,20 +141,16 @@ const AudioAnalyzer = ({setView , setRecordedMedia, close}) => {
 
       return (
         <>
-        <div className="modalHeader">
-          <div className="modalHeaderContent">
-            Record Audio <IoCloseSharp onClick={close} />
-          </div>
-        </div>
+        <NotchCloseIcon handleClose={close} />
         <div className="modalBody">
             <div className="previewContainer">
-                  <canvas ref={analyserCanvas}  />
+                  <canvas ref={analyserCanvas} width={"430"} height={"250"}  />
             </div>
         </div>
         <div className="modalFooter">
           <div className={styles.footerContainer}>
             <div className={recordButtonClasses} onClick={toggleRecording}>
-              {recorderState === "Idle" ? "Record" : "Recording"}
+              {recorderState === "Idle" ? "Record" : "Stop"}
             </div>
           </div>
         </div>

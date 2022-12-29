@@ -4,6 +4,7 @@ import { ProgressBar } from "react-bootstrap";
 import {  useRef  , useState} from "react";
 import {FiPlay  , FiDownloadCloud , FiImage} from "react-icons/fi";
 import {MdReplay} from "react-icons/md";
+import NotchCloseIcon from "../NotchCloseIcon";
 
 const PreviewContainer = ({recordedMedia , recordedVideoRef }) => {
     const [progress , setProgress] = useState(0);
@@ -68,11 +69,8 @@ const PreviewRecording = ({ setView , close , recordedMedia}) => {
 
     return (
         <>
-        <div className="modalHeader">
-            <div className="modalHeaderContent">
-                Preview <IoCloseSharp onClick={close} />
-            </div>
-        </div>
+       
+         <NotchCloseIcon handleClose={close}/>
         <div className="modalBody">
             <div className={styles.modalBodyContainer}>
                 <IoReload onClick={onReloadClick} />

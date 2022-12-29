@@ -4,6 +4,7 @@ import classNames from "classnames";
 import {IoCloseSharp } from "react-icons/io5";
 import {AiFillLeftCircle , AiFillRightCircle} from "react-icons/ai";
 import { useNavigationScroll } from "../../utils/hooks/useNavigationScroll";
+import NotchCloseIcon from "../NotchCloseIcon";
 
 const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}) => {
 
@@ -159,11 +160,7 @@ const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}
 
     return (
         <>
-        <div className="modalHeader">
-            <div className="modalHeaderContent">
-               Thumbnail <IoCloseSharp onClick={close} />
-            </div>
-        </div>
+       <NotchCloseIcon handleClose={close} />
         <div className={`modalBody ${styles.customBody}`}>
         <div className={styles.thumbnailContainer}>
                 <img
