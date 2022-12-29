@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/React-WebRTC-Recorder/static/css/main.a0eb626c.css",
-    "main.js": "/React-WebRTC-Recorder/static/js/main.687f66b5.js",
+    "main.js": "/React-WebRTC-Recorder/static/js/main.d6464daf.js",
     "index.html": "/React-WebRTC-Recorder/index.html",
     "main.a0eb626c.css.map": "/React-WebRTC-Recorder/static/css/main.a0eb626c.css.map",
-    "main.687f66b5.js.map": "/React-WebRTC-Recorder/static/js/main.687f66b5.js.map"
+    "main.d6464daf.js.map": "/React-WebRTC-Recorder/static/js/main.d6464daf.js.map"
   },
   "entrypoints": [
     "static/css/main.a0eb626c.css",
-    "static/js/main.687f66b5.js"
+    "static/js/main.d6464daf.js"
   ]
 }
