@@ -1,9 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
-import styles from "./thumbnailselection.module.css";
+import styles from "./styles/thumbnailselection.module.css";
 import classNames from "classnames";
-import {IoCloseSharp } from "react-icons/io5";
-import {AiFillLeftCircle , AiFillRightCircle} from "react-icons/ai";
-import {BiChevronLeft, BiChevronRight} from "react-icons/bi";
 import { useNavigationScroll } from "../../utils/hooks/useNavigationScroll";
 import NotchCloseIcon from "../NotchCloseIcon";
 import {FaChevronLeft , FaChevronRight} from "react-icons/fa";

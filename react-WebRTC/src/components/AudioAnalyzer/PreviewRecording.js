@@ -1,6 +1,5 @@
-import {IoCloseSharp , IoReload} from "react-icons/io5";
-import styles from "./audiopreview.module.css";
-import { ProgressBar } from "react-bootstrap";
+import { IoReload} from "react-icons/io5";
+import styles from "./styles/audiopreview.module.css";
 import {  useRef  , useState , useImperativeHandle} from "react";
 import {   FiDownloadCloud } from "react-icons/fi";
 import {MdReplay} from "react-icons/md";

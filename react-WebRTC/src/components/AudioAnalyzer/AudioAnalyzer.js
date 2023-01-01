@@ -1,6 +1,6 @@
 import { useState ,useRef } from "react";
 import {IoCloseSharp} from "react-icons/io5";
-import styles from "./styles.module.css";
+import styles from "./styles/styles.module.css";
 import classNames from "classnames";
 import NotchCloseIcon from "../NotchCloseIcon";
 

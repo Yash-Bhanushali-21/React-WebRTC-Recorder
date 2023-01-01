@@ -1,8 +1,8 @@
-import {IoCloseSharp , IoReload} from "react-icons/io5";
-import styles from "./previewrecording.module.css";
+import { IoReload} from "react-icons/io5";
+import styles from "./styles/previewrecording.module.css";
 import { ProgressBar } from "react-bootstrap";
 import {  useRef  , useState} from "react";
-import {FiPlay  , FiDownloadCloud , FiImage} from "react-icons/fi";
+import { FiDownloadCloud , FiImage} from "react-icons/fi";
 import {MdReplay} from "react-icons/md";
 import NotchCloseIcon from "../NotchCloseIcon";
 

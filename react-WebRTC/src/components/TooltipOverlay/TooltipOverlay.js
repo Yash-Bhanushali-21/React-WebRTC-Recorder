@@ -1,6 +1,6 @@
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-import styles from "./tooltipoverlay.module.css";
+import styles from "./styles/tooltipoverlay.module.css";
 
 
 export const TooltipOverlay = ({tooltipLabel , content , show , placement="bottom" }) => {

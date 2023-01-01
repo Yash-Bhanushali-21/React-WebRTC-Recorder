@@ -1,4 +1,4 @@
-import styles from "./notchclose.module.css";
+import styles from "./styles/notchclose.module.css";
 import {IoCloseSharp } from "react-icons/io5";
 
 
