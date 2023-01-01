@@ -3,8 +3,10 @@ import styles from "./thumbnailselection.module.css";
 import classNames from "classnames";
 import {IoCloseSharp } from "react-icons/io5";
 import {AiFillLeftCircle , AiFillRightCircle} from "react-icons/ai";
+import {BiChevronLeft, BiChevronRight} from "react-icons/bi";
 import { useNavigationScroll } from "../../utils/hooks/useNavigationScroll";
 import NotchCloseIcon from "../NotchCloseIcon";
+import {FaChevronLeft , FaChevronRight} from "react-icons/fa";
 
 const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}) => {
 
@@ -196,8 +198,12 @@ const ThumbnailSelection = ({close ,setRecordedMedia ,  recordedMedia , setView}
                         />
                         )) : <></>}
                     </ul>
-                    <AiFillLeftCircle className={leftChevronClasses} onClick={scrollLeft} />
-                    <AiFillRightCircle className={rightChevronClasses} onClick={scrollRight} />
+                    <div className={leftChevronClasses} onClick={scrollLeft}>
+                      <FaChevronLeft />
+                    </div>
+                    <div className={rightChevronClasses} onClick={scrollRight}>
+                    <FaChevronRight />
+                    </div>
                    
                 </div>
             </div>

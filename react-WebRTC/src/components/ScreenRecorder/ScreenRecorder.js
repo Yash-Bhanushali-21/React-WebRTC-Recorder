@@ -2,7 +2,6 @@ import classNames from "classnames";
 import {  useEffect, useRef, useState } from "react";
 import CombinedPreview from "./CombinedPreview";
 import styles from "./screenrecorder.module.css";
-import {IoCloseSharp } from "react-icons/io5";
 import {FiUploadCloud} from "react-icons/fi";
 import {HiOutlineVideoCamera , HiOutlineVideoCameraSlash} from "react-icons/hi2";
 import {AiOutlineAudioMuted , AiOutlineAudio} from "react-icons/ai";
