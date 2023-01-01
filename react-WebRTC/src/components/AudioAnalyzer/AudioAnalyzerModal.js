@@ -1,7 +1,54 @@
 import Modal from "react-bootstrap/Modal";
-import { useState } from "react";
+import React from "react";
 import AudioAnalyzer from "./AudioAnalyzer";
 import PreviewRecording from "./PreviewRecording";
+
+export default class AudioAnalyzerModal extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            view : "record",
+            url : ""
+        }
+
+        this.setPreviewState = this.setPreviewState.bind(this);
+        this.renderCurrentScreen = this.renderCurrentScreen.bind(this);
+    }
+
+    componentDidUpdate() {
+        console.log(this.state)
+    }
+
+    setPreviewState(url) {
+        this.setState({
+            url,
+            view : "preview"
+        })
+    }
+
+    renderCurrentScreen() {
+        switch(this.state.view){
+            case "record":
+                return <AudioAnalyzer close={this.props.close}   setPreviewState={this.setPreviewState} />
+            case "preview":
+                return <PreviewRecording setView={this.setView} close={this.props.close} recordedMedia={this.state.url} />
+            default:
+                return <div>{"Nothing to show."}</div>
+        }
+    }
+
+    render() {
+        return (<Modal  show={this.props.show} dialogClassName={'modal-dialog'} animation={false} onHide={this.props.close} centered>
+        {this.renderCurrentScreen()} 
+    </Modal>)
+
+}
+    }
+
+
+
+/*
 
 const renderCurrentScreen = ({view, setView , close, recordedMedia, setRecordedMedia}) => {
     switch(view){
@@ -30,3 +77,5 @@ const AudioAnalyzerModal = ({show , close}) => {
 }
 
 export default AudioAnalyzerModal;
+
+*/
